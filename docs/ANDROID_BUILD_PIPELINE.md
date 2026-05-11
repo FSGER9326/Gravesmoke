@@ -12,8 +12,8 @@ Earlier hand-built APK attempts were unreliable. This repo now moves toward a re
 
 ```text
 package: com.gravesmoke.road
-versionCode: 80
-versionName: 0.8.0-dev1
+versionCode: 81
+versionName: 0.8.1-dev1
 minSdk: 23
 targetSdk: 35
 compileSdk: 35

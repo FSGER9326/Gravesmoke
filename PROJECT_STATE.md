@@ -66,7 +66,7 @@ v0.8.1-dev1 currently includes:
 - camp save export/import/reset tools
 - validation for Greyhook data references
 - Greyhook topology validation for route reachability, lower-cell access, escape providers, prisoner choices, companion reactions, and acceptance criteria
-- Android WebView wrapper scaffold at versionCode 80 / versionName 0.8.0-dev1
+- Android WebView wrapper scaffold at versionCode 81 / versionName 0.8.1-dev1
 
 ## Current validation commands
 

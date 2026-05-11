@@ -8,7 +8,8 @@
 - Wired playthrough validator into `npm run validate` and as `npm run validate:playthrough`.
 - Hardened save import/export/reset: import handles empty/malformed input, hydrates through existing hydrate() before assignment, does not overwrite current save on failure; export includes `saveVersion`; reset clears localStorage and returns to title.
 - Updated `docs/ANDROID_BUILD_PIPELINE.md` with APK verification checklist (14 steps) and blank-screen troubleshooting checklist (11 items).
-- Updated Android CI workflow to trigger on `assets/**` changes.
+- Updated Android CI workflow to trigger on `assets/**` changes and pull requests to main.
+- Bumped Android wrapper versionCode to `81` / versionName to `0.8.1-dev1`.
 - Bumped version to `0.8.1-dev1`.
 
 ## v0.8.0-dev1 — Greyhook Complete Flow Pass
