@@ -2,7 +2,7 @@
 
 Android-first dark fantasy RPG project.
 
-Current prototype: **v0.7.7 — Greyhook Prisoner Choice Slice**.
+Current prototype: **v0.7.8 — Greyhook Alert Consequence Slice**.
 
 ## Current design
 
@@ -10,16 +10,17 @@ Gravesmoke Road is a nonlinear mobile CRPG with gamebook-style presentation, nod
 
 ## Current prototype status
 
-v0.7.7 is a playable HTML prototype. It is not yet a stable Android APK. The prototype is being used to mature the RPG systems before wrapping them in a reliable Android build pipeline.
+v0.7.8 is a playable HTML prototype. It is not yet a stable Android APK. The prototype is being used to mature the RPG systems before wrapping them in a reliable Android build pipeline.
 
-## v0.7.7 focus
+## v0.7.8 focus
 
-- sealed-prisoner fate choices: question, extract, silence, or trade
-- companion-specific Greyhook scenes in the outer yard
-- starting enemy escalation inside Greyhook
-- capture-route soft failure for failed extraction
-- Greyhook prisoner outcome tracking in the Case Board and Company screen
-- new prisoner-related papers, clues, blackmail, and trade items
+- Greyhook alert ladder: routine, tightened searches, lockdown, forced escape/capture
+- alert-driven Greyhook consequences: patrol confrontation, escape mark, forced escape, deliberate capture route
+- companion reactions to prisoner fate
+- party morale tracking
+- camp actions tied to Greyhook: plan escape / reduce alert, debrief prisoner choice
+- Greyhook chapter resolution card
+- new support items and leads: Greyhook Escape Mark, Companion Objection Note, Greyhook Escape Route
 
 ## Core loop
 
@@ -32,8 +33,9 @@ character origin
 → papers / warrants / reputation
 → approach choice
 → fortress interior scenes
+→ alert / escape / capture pressure
 → sealed-prisoner choice
-→ faction and world consequences
+→ companion reactions and chapter consequence
 ```
 
 ## Next milestone
@@ -42,9 +44,8 @@ character origin
 
 Goals:
 
-- make Greyhook alert dynamically change scenes and exits
-- expand consequences of prisoner choice
-- add stronger companion reactions to prisoner fate
-- add camp investigation scenes tied to Greyhook clues
-- add full failure-forward routes for capture, exposure, and escape
-- prepare Android wrapper work after the gameplay slice is stable
+- complete Greyhook as a proper vertical slice chapter
+- make alert change exits, patrols, dialogue, and route availability throughout Greyhook
+- deepen companion reactions and loyalty/morale consequences
+- expand aftermath of prisoner choice across factions and starting enemy pressure
+- add first Android wrapper pass after the gameplay slice is stable
