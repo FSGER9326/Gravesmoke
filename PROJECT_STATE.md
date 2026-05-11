@@ -57,12 +57,23 @@ v0.8.0-dev1 currently includes:
 - faction, legal/crime, and next-hook consequences
 - expanded Case Board sections in progress
 - validation for Greyhook data references
+- Greyhook topology validation for route reachability, lower-cell access, escape providers, prisoner choices, companion reactions, and acceptance criteria
 - Android WebView wrapper scaffold at versionCode 80 / versionName 0.8.0-dev1
+
+## Current validation commands
+
+```bash
+npm run validate
+npm run validate:greyhook
+npm run android:debug
+```
+
+`npm run validate` now runs data validation, runtime wiring validation, and Greyhook flow topology validation.
 
 ## Known risks / next checks
 
-- The web flow must be manually played from new game to Greyhook aftermath to catch stuck states.
+- The web flow must still be manually played from new game to Greyhook aftermath to catch UX-level stuck states that topology validation cannot see.
 - `src/main.js` still contains some hardcoded Greyhook flow logic and should be the next runtime stabilization target.
-- Android WebView loading must be verified on device; `file://` + ES module/fetch behavior is still a known risk.
+- Android WebView loading must be verified on device through the generated debug APK.
 - Android debug workflow should be run only after `npm run validate` passes.
 - Visual polish, combat expansion, release signing, and new chapters should wait until the Greyhook web flow is stable.
