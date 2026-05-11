@@ -80,9 +80,12 @@ character identity / starting enemy
 
 ```bash
 npm run validate
-python3 -m http.server 8080
+npm run dev
+npm run sync
 ./scripts/build-android-debug.sh
 ```
+
+For the local test server and GitHub sync workflow, see `docs/LOCAL_DEV_SYNC.md`.
 
 ## Next milestone
 

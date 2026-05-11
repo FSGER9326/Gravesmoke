@@ -4,8 +4,11 @@
   "private": true,
   "description": "Android-first dark fantasy RPG prototype.",
   "scripts": {
-    "start": "python3 -m http.server 8080",
+    "start": "node tools/serve-static.js",
+    "dev": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/dev.ps1",
     "serve": "bash scripts/serve-web.sh",
+    "sync": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/sync-github.ps1",
+    "autosync": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/auto-sync-github.ps1",
     "validate": "node tools/validate-game-data.js && node tools/validate-runtime.js && node tools/validate-greyhook-flow.js",
     "validate:data": "node tools/validate-game-data.js",
     "validate:runtime": "node tools/validate-runtime.js",
