@@ -58,6 +58,10 @@ v0.8.0-dev1 currently includes:
 - expanded Case Board sections in progress
 - current-objective guidance across the main screens
 - direct route travel from Case Board and objective buttons
+- generated first-batch scene panels and companion portraits under `assets/art/**`
+- generated and cropped UI icon sprite assets under `assets/ui/**`
+- manifest-backed UI art helpers in `data/ui_assets.json` and `src/main.js`
+- illustrated main play UI with scene art, portrait cards, item icons, faction marks, grouped actions, and icon-led bottom navigation
 - scrollable centered map layout for manual testing
 - camp save export/import/reset tools
 - validation for Greyhook data references

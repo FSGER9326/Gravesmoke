@@ -25,6 +25,7 @@ tasks.register('syncWebPrototype', Copy) {
         include 'index.html'
         include 'src/**'
         include 'data/**'
+        include 'assets/**'
     }
     into layout.projectDirectory.dir('src/main/assets')
 }

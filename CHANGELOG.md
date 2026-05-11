@@ -2,6 +2,14 @@
 
 ## v0.8.0-dev1 — Greyhook Complete Flow Pass
 
+- Added a first UI and graphic asset pass for the main play screen.
+- Added generated scene panels for Gallowsford Gate, Old Watchtower, Greyhook Gate, Fortress Infirmary, Greyhook Lower Cells, and Synod Archive.
+- Added generated companion portraits for all eight current companions.
+- Added a generated UI sprite sheet and cropped item, faction, navigation, and action icons.
+- Added `data/ui_assets.json` as the runtime manifest for node art, portraits, item icons, faction marks, nav icons, and action icons.
+- Updated the main UI with scene art, portrait cards, item icon cards, faction rows, a stronger HUD, grouped node actions, and icon-led bottom navigation.
+- Updated Android WebView asset sync to bundle `assets/**`.
+- Extended runtime validation to verify UI manifest paths and Android asset copying.
 - Added `data/greyhook_v08.json` as a structured vertical-slice data file.
 - Added Greyhook chapter metadata, approaches, scenes, prisoner choices, companion reactions, enemy interference, and acceptance criteria.
 - Updated `src/main.js` to load v0.8 Greyhook data alongside base game data.

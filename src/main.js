@@ -1,5 +1,6 @@
 const D=await fetch('./data/game_data.json').then(r=>r.json());
 const V=await fetch('./data/greyhook_v08.json').then(r=>r.json());
+const UI=await fetch('./data/ui_assets.json').then(r=>r.json());
 D.version=V.version;
 const K='gravesmoke.repo.v080dev1';
 const app=document.getElementById('app');
@@ -25,9 +26,23 @@ const lead=id=>D.leads[id];
 const item=id=>D.items[id]||{name:id,type:'unknown',tags:[],text:'Missing item data.'};
 const comp=id=>D.companions[id]||{name:id,role:'Unknown',tags:[],ability:'Unknown',effect:'Missing companion data.',text:''};
 const act=a=>String(a).replaceAll('"','&quot;');
-const btn=(t,a,c='')=>`<button class="btn ${c}" onclick="${act(a)}">${t}</button>`;
+const btn=(t,a,c='')=>`<button class="btn ${c}" onclick="${act(a)}">${actionIcon(t,c)}<span>${t}</span></button>`;
 const tag=(t,c='')=>`<span class="tag ${c}">${t}</span>`;
 const card=(title,body,actions='')=>`<div class="card"><div class="ct">${title}</div><div class="cx">${body}</div>${actions}</div>`;
+const assetUrl=src=>src?`./${src}`:'';
+function assetImg(asset,cls,alt){if(!asset?.src)return '';let text=alt===undefined?(asset.alt||''):alt;return `<img class="${cls}" src="${assetUrl(asset.src)}" alt="${act(text)}" loading="lazy">`}
+function iconEntry(name){return UI.actions?.[name]||UI.nav?.[name]||UI.itemTypes?.[name]||UI.factions?.[name]||(name?{src:`assets/ui/icons/${name}.png`,alt:name}:null)}
+function nodeArt(id=S.node){return UI.nodes?.[id]||null} window.nodeArt=nodeArt;
+function companionPortrait(id){return UI.companions?.[id]||null} window.companionPortrait=companionPortrait;
+function itemIcon(value){let data=typeof value=='string'?item(value):value||{};let tagIcon=(data.tags||[]).map(t=>UI.itemTags?.[t]).find(Boolean);return iconEntry(tagIcon)||UI.itemTypes?.[data.type]||UI.itemTypes?.unknown||null} window.itemIcon=itemIcon;
+function factionMark(id){return UI.factions?.[id]||null} window.factionMark=factionMark;
+function actionKind(text,cls=''){let t=String(text).toLowerCase();if(cls.includes('bad')||/danger|forced|lockdown|enemy|reset|capture|silence/.test(t))return 'danger';if(/travel|go to|route|reach|road|current node/.test(t))return 'travel';if(/investigate|search|scout|study|gather|lead/.test(t))return 'investigate';if(/speak|ask|question|contact|debrief|rumor/.test(t))return 'speak';if(/camp|rest|forage|save|import|export/.test(t))return 'camp';if(/accept|resolve|choose|recover|take|begin|continue|start|jump|enter/.test(t))return 'resolve';return 'action'}
+function actionIcon(text,cls=''){return assetImg(iconEntry(actionKind(text,cls)),'btnIcon','')}
+function navIcon(id){return assetImg(UI.nav?.[id],'navIcon','')}
+function itemIconHtml(value,cls='itemIcon'){return assetImg(itemIcon(value),cls,'')}
+function factionMarkHtml(id,cls='factionMark'){return assetImg(factionMark(id),cls,'')}
+function portraitImg(id,cls='portrait'){let c=comp(id),p=companionPortrait(id);return p?assetImg(p,cls,p.alt||c.name):`<div class="${cls} portraitFallback">${(c.name||'?').slice(0,1)}</div>`}
+function scenePanel(id=S.node){let art=nodeArt(id);if(!art)return '';return `<figure class="sceneArt"><img src="${assetUrl(art.src)}" alt="${act(art.alt||n(id).name)}" loading="eager"><figcaption>${n(id).name}</figcaption></figure>`}
 const any=(need=[],got=[])=>!need?.length||need.some(x=>got.includes(x));
 const partyHasTag=t=>S.party.some(id=>(comp(id).tags||[]).includes(t));
 
@@ -167,5 +182,29 @@ function decodeSave(code){let text=atob(code.trim());let bytes=Uint8Array.from(t
 function exportSave(){let payload=encodeSave(S),done=()=>{log('Save code exported.');render()};if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(payload).then(done).catch(()=>{prompt('Copy save code',payload);done()});else{prompt('Copy save code',payload);done()}} window.exportSave=exportSave;
 function importSave(){let payload=prompt('Paste save code');if(!payload)return;try{S=hydrate(decodeSave(payload));log('Save code imported.');render()}catch(e){alert('Save import failed.');log('Save import failed.');render()}} window.importSave=importSave;
 function confirmReset(){if(confirm('Reset this run and return to party selection?'))reset()} window.confirmReset=confirmReset;
+
+function actionGroup(title,html,cls=''){if(!html)return '';let key=cls.includes('danger')?'danger':cls.includes('travel')?'travel':cls.includes('scene')?'investigate':'resolve';return `<section class="actionGroup ${cls}"><div class="groupTitle">${assetImg(iconEntry(key),'groupIcon','')}<span>${title}</span></div><div class="actionGrid">${html}</div></section>`}
+function resourcePill(label,value,cls='',icon='action'){return `<span class="resourcePill ${cls}">${assetImg(iconEntry(icon),'pillIcon','')}<span>${label}</span><b>${value}</b></span>`}
+resourceRail=function(){let parts=[resourcePill('coin',S.res.coin,'gold','paper'),resourcePill('food',S.res.food,S.res.food<=1?'red':'','camp'),resourcePill('med',S.res.medicine,'','heal'),resourcePill('tools',S.res.tools,'','key'),resourcePill('heat',S.res.heat,S.res.heat>=4?'red':'','warning')];if(S.greyhook)parts.push(resourcePill('Greyhook',`${S.greyhookAlert}/5`,S.greyhookAlert>=4?'red':'purple','danger'));if(S.morale)parts.push(resourcePill('morale',S.morale,S.morale<0?'red':'green','company'));return `<div class="resourceRail">${parts.join('')}</div>`};
+header=function(){return `<div class="head"><div><h1>Gravesmoke Road</h1><div class="mut">v${D.version} - Day ${S.res.day} - ${n(S.node).name}</div></div>${resourceRail()}</div>`};
+guidePanel=function(){let a=guideAction();return `<div class="guidePanel"><div><div class="guideKicker">Current objective</div><div class="guideText">${recommendedNext()}</div></div>${btn(a.label,a.action,`mini ${a.cls||''}`)}</div>`};
+
+function nodeActionGroups(){let g={primary:'',scene:'',danger:''};let ls=Object.entries(D.leads).filter(([k,l])=>l.node==S.node&&S.leads[k]=='rumored');if(ls.length)g.scene+=ls.map(([k,l])=>btn('Investigate: '+l.name+' ('+checkScore(l)+'/'+Math.max(0,l.dc-1)+')',`investigate('${k}')`,'good')).join('');if(S.node=='tower'&&S.contract&&!S.ledger)g.primary+=btn('Take the ledger by force or parley','ledgerWin()','pri');if(S.node=='greyhook_gate'){g.primary+=greyhookApproaches();g.scene+=sceneButtonsForNode('greyhook_gate')}if(S.node=='greyhook_outer_yard'){g.scene+=sceneButtonsForNode('greyhook_outer_yard');g.primary+=btn('Ask companion for Greyhook angle','companionAngle()','good');g.danger+=btn('Starting enemy interference','enemyInterferenceScene()','bad')}if(['quartermaster_tent','fortress_infirmary','lower_cells','synod_archive'].includes(S.node))g.scene+=sceneButtonsForNode(S.node);if(S.node=='sealed_prisoner_cell')g.primary+=sceneButtonsForNode('sealed_prisoner_cell')+prisonerButtons();if(isGreyhookLockdown())g.danger+=btn('Forced escape / capture pressure','escapeOrCapture()','bad');if(!g.primary&&!g.scene&&!g.danger)g.scene+=btn('Gather rumor','rumor()');return g}
+function renderActionGroups(g){return actionGroup('Primary',g.primary,'primary')+actionGroup('Scene',g.scene,'scene')+actionGroup('Danger',g.danger,'danger')}
+nodeActions=function(){return renderActionGroups(nodeActionGroups())};
+nodeScreen=function(){let exits=n(S.node).exits.map(id=>btn('Travel to '+n(id).name,`travel('${id}')`,canUseExit(id)?'':'bad')).join('');app.innerHTML=header()+`<div class="panel playPanel">${guidePanel()}${scenePanel(S.node)}<div class="locationBlock"><div class="guideKicker">Current location</div><h2>${n(S.node).name}</h2><p>${nodeText()}</p></div>${nodeActions()}${actionGroup('Travel',exits,'travel')}</div>`};
+
+party=function(){let choices=S.pool.map(id=>{let c=comp(id);return `<div class="choice partyChoice ${S.party.includes(id)?'sel':''}" onclick="pickComp('${id}')">${portraitImg(id,'choicePortrait')}<div><div class="ct">${c.name} - ${c.role}</div><div class="cx">${c.text}<br><b>${c.ability}:</b> ${c.effect}<br>${(c.tags||[]).map(x=>tag(x)).join('')}</div></div></div>`}).join('');app.innerHTML=header()+`<div class="panel"><h2>Choose three companions</h2><p class="mut">Companions open Greyhook routes and react to prisoner fate.</p><div class="partyGrid">${choices}</div>${S.party.length==3?btn('Begin at Gallowsford Gate','go("map")','pri'):''}</div>`};
+function companionCard(id){let c=comp(id);return `<div class="card companionCard">${portraitImg(id)}<div><div class="ct">${c.name} - ${c.role}</div><div class="cx">${c.text}<br><b>${c.ability}:</b> ${c.effect}<br>${(c.tags||[]).map(x=>tag(x)).join('')}</div></div></div>`}
+company=function(){app.innerHTML=header()+`<div class="panel">${guidePanel()}<h2>Company</h2>${S.party.map(companionCard).join('')||'<p>No companions selected.</p>'}<h3>Morale</h3>${tag(S.morale||0,S.morale<0?'red':'green')}<h3>Companion Reactions</h3>${reactionCards()||'<p>No major reaction yet.</p>'}<h3>Crimes</h3>${S.crimes.map(c=>tag(c,'red')).join('')||'<p>No recorded crimes.</p>'}</div>`};
+function itemCard(id){let i=item(id);return `<div class="card itemCard">${itemIconHtml(i)}<div><div class="ct">${i.name} - ${i.type}</div><div class="cx">${i.text}<br>${(i.tags||[]).map(x=>tag(x)).join('')}</div></div></div>`}
+pack=function(){app.innerHTML=header()+`<div class="panel">${guidePanel()}<h2>Pack & Papers</h2>${S.items.map(itemCard).join('')||'<p>No special items yet.</p>'}</div>`};
+consequenceCards=function(){let f=Object.entries(S.fac).filter(([,v])=>v).map(([k,v])=>`<div class="factionRow">${factionMarkHtml(k)}<span>${D.factions[k].name}</span><b>${v>0?'+':''}${v}</b></div>`).join('')||'No faction shifts yet.';let c=S.crimes.length?S.crimes.map(x=>tag(x,'red')).join(''):'No recorded crimes.';let extra=S.consequenceLog.map(x=>card('Consequence',x)).join('');return card('Faction Changes',f)+card('Legal / Crime Record',c)+card('Party Morale',String(S.morale||0))+extra};
+routeCards=function(chapter){return Object.entries(D.leads).filter(([,l])=>l.chapter==chapter).map(([k,l])=>{let state=S.leads[k]||'unknown',reward=l.item?`<span class="rewardLine">${itemIconHtml(l.item,'miniIcon')}${item(l.item).name}</span>`:'none',body=`${l.text}<br><b>Where:</b> ${n(l.node).name} - <b>Check:</b> ${l.stat.toUpperCase()} ${l.dc}<br>${leadCheckLine(l)}<br><b>Reward:</b> ${reward}<br><b>State:</b> ${tag(state,state=='viable'?'green':state=='failed_forward'?'red':state=='rumored'?'gold':'')}${l.transformsTo?'<br><b>Failed-forward:</b> '+l.transformsTo.map(x=>D.leads[x]?.name||x).join(', '):''}`;return card(l.name,body,routeCardAction(k,l,state))}).join('')};
+nextStep=function(){let a=guideAction();return card('Next',recommendedNext(),btn(a.label,a.action,a.cls||''))};
+title=function(){app.innerHTML=header()+`<div class="panel titlePanel">${scenePanel('gate')}<h2>v0.8.0-dev1 - Greyhook Complete Flow Pass</h2><p>The first full Greyhook flow pass: route families, alert ladder, interior scenes, prisoner fate, companion reactions, aftermath, and next chapter hook.</p>${btn('New Game','reset()','pri')}${btn(hasStoredSave()?'Continue':'Start from party draft','continueGame()','good')}${btn('Jump to Greyhook test state','devGreyhook()')}</div>`};
+
+const navLabels={map:'Map',board:'Board',company:'Company',pack:'Pack',camp:'Camp'};
+render=function(){save();nav.hidden=['title','party'].includes(S.screen);if(!nav.hidden)nav.innerHTML=`<div class="navInner">${Object.keys(navLabels).map(x=>`<button class="${S.screen==x?'active':''}" onclick="go('${x}')">${navIcon(x)}<span>${navLabels[x]}</span></button>`).join('')}</div>`;({title,map,board,company,pack,camp,party,node:nodeScreen}[S.screen]||map)()}; window.render=render;
 
 render();
