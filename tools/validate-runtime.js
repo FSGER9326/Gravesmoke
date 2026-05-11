@@ -9,9 +9,14 @@ function requireText(path) {
 const index = requireText('index.html');
 const main = requireText('src/main.js');
 const styles = requireText('src/styles.css');
+const androidMain = requireText('android/app/src/main/java/com/gravesmoke/road/MainActivity.java');
 
 function requireIncludes(text, needle, context) {
   if (!text.includes(needle)) throw new Error(`${context} missing required text: ${needle}`);
+}
+
+function requireExcludes(text, needle, context) {
+  if (text.includes(needle)) throw new Error(`${context} contains forbidden legacy text: ${needle}`);
 }
 
 requireIncludes(index, 'id="app"', 'index.html');
@@ -35,6 +40,16 @@ requireIncludes(styles, '.panel', 'src/styles.css');
 requireIncludes(styles, '.btn', 'src/styles.css');
 requireIncludes(styles, '.card', 'src/styles.css');
 
+requireIncludes(androidMain, 'androidx.webkit.WebViewAssetLoader', 'MainActivity.java');
+requireIncludes(androidMain, 'new WebViewAssetLoader.Builder()', 'MainActivity.java');
+requireIncludes(androidMain, 'addPathHandler("/assets/"', 'MainActivity.java');
+requireIncludes(androidMain, 'https://appassets.androidplatform.net/assets/index.html', 'MainActivity.java');
+requireIncludes(androidMain, 'shouldInterceptRequest', 'MainActivity.java');
+requireIncludes(androidMain, 'settings.setAllowFileAccess(false)', 'MainActivity.java');
+requireIncludes(androidMain, 'settings.setAllowFileAccessFromFileURLs(false)', 'MainActivity.java');
+requireIncludes(androidMain, 'settings.setAllowUniversalAccessFromFileURLs(false)', 'MainActivity.java');
+requireExcludes(androidMain, 'file:///android_asset/index.html', 'MainActivity.java');
+
 const syntax = spawnSync(process.execPath, ['--check', '--input-type=module'], {
   input: main,
   encoding: 'utf8'
@@ -46,4 +61,5 @@ if (syntax.status !== 0) {
 }
 
 console.log('Web runtime wiring validated.');
+console.log('Android WebView asset-loader wiring validated.');
 console.log('src/main.js passed module syntax check.');
