@@ -5,7 +5,9 @@
   "description": "Android-first dark fantasy RPG prototype.",
   "scripts": {
     "start": "python3 -m http.server 8080",
-    "validate": "node tools/validate-game-data.js"
+    "serve": "bash scripts/serve-web.sh",
+    "validate": "node tools/validate-game-data.js",
+    "android:debug": "bash scripts/build-android-debug.sh"
   },
   "devDependencies": {}
 }
