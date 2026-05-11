@@ -4,9 +4,9 @@ Updated: 2026-05-11
 
 ## Current prototype
 
-**v0.7.8 — Greyhook Alert Consequence Slice**
+**v0.8.0-dev1 — Greyhook Complete Flow Pass**
 
-This is a playable HTML prototype. It is not yet a stable Android APK. The current goal is to mature the gameplay systems into a strong vertical slice before wrapping the game in a reliable Android build pipeline.
+This is a playable HTML prototype moving toward the first stable Android-debug vertical slice. It is not yet a polished or verified Android APK.
 
 ## Game identity
 
@@ -15,55 +15,54 @@ Gravesmoke Road is an Android-first dark fantasy RPG with:
 - gamebook-style presentation
 - node travel
 - light supplies and fatigue
-- detailed character creation
+- detailed character identity and starting personal enemy pressure
 - identity-driven companions
 - named factions
-- papers, warrants, and legal access systems
+- papers, warrants, legal access, and crime records
 - investigation-led quests
+- Case Board route guidance
+- failed-forward leads
 - access-barrier main story chapters
-- tactical card combat
-- faction clocks and pressure systems
-- starting personal enemy pressure
+- tactical card combat planned after the Greyhook flow is stable
 
 ## Current playable loop
 
 ```text
-character origin
-→ companion draft
+starting enemy / companion draft
 → node travel
-→ case board
+→ Case Board
 → leads and clues
-→ papers / warrants / reputation
-→ approach choice
+→ papers / reputation / route solutions
+→ Greyhook approach choice
 → fortress interior scenes
 → alert / escape / capture pressure
 → sealed-prisoner choice
 → companion reactions and chapter consequence
+→ Synod Archive next hook
 ```
 
 ## Current milestone
 
-The project is moving toward **v0.8 — Greyhook Fortress vertical slice**.
+The project is implementing **v0.8 — Greyhook Fortress vertical slice**.
 
-v0.7.8 already includes:
+v0.8.0-dev1 currently includes:
 
-- Greyhook Fortress approach routes
-- first Greyhook interior nodes
-- sealed prisoner contact
-- prisoner fate choices
-- Greyhook alert ladder
-- forced escape / capture pressure
-- companion reactions
-- camp actions tied to Greyhook
+- `data/greyhook_v08.json` structured chapter data
+- Greyhook route families: supply escort, quartermaster blackmail, infirmary route, forged transfer, captured-inside route, escape route
+- dev-only Greyhook jump state
+- first Greyhook interior node and scene structure
+- sealed prisoner contact and fate choices
+- Greyhook alert ladder with lockdown and forced escape/capture pressure
+- companion reaction cards and morale changes
+- faction, legal/crime, and next-hook consequences
+- expanded Case Board sections in progress
+- validation for Greyhook data references
+- Android WebView wrapper scaffold at versionCode 80 / versionName 0.8.0-dev1
 
-## Next milestone
+## Known risks / next checks
 
-v0.8 should complete Greyhook as the first full vertical slice chapter.
-
-Required work:
-
-- make alert change exits, patrols, dialogue, and route availability throughout Greyhook
-- deepen companion reactions and loyalty/morale consequences
-- expand aftermath of prisoner choice across factions and starting enemy pressure
-- add stronger scene consequences for capture, exposure, and escape
-- prepare the first Android wrapper pass after gameplay stabilizes
+- The web flow must be manually played from new game to Greyhook aftermath to catch stuck states.
+- `src/main.js` still contains some hardcoded Greyhook flow logic and should be the next runtime stabilization target.
+- Android WebView loading must be verified on device; `file://` + ES module/fetch behavior is still a known risk.
+- Android debug workflow should be run only after `npm run validate` passes.
+- Visual polish, combat expansion, release signing, and new chapters should wait until the Greyhook web flow is stable.
