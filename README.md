@@ -2,15 +2,15 @@
 
 Android-first dark fantasy RPG project.
 
-Current prototype: **v0.7.8 — Greyhook Alert Consequence Slice**.
+Current prototype: **v0.8.0-dev1 — Greyhook Complete Flow Pass**.
 
 ## Current design
 
-Gravesmoke Road is a nonlinear mobile CRPG with gamebook-style presentation, node travel, light supplies, deep character creation, named factions, party management, papers/warrants, investigation-led quests, tactical card combat, and access-barrier main story chapters.
+Gravesmoke Road is a nonlinear mobile CRPG with gamebook-style presentation, node travel, light supplies and fatigue, detailed character identity, named factions, party management, papers/warrants, investigation-led quests, tactical card combat, access-barrier main story chapters, starting personal enemy pressure, and a Case Board that keeps route logic visible.
 
 ## Current repository status
 
-The repo now contains a proper modular prototype layout:
+The repo contains a modular prototype layout:
 
 ```text
 /
@@ -18,13 +18,14 @@ The repo now contains a proper modular prototype layout:
   src/main.js
   src/styles.css
   data/game_data.json
+  data/greyhook_v08.json
   tools/validate-game-data.js
   android/
   docs/
   .github/workflows/
 ```
 
-The web prototype is playable from `index.html`. The Android wrapper scaffold exists under `/android` and loads the same local web prototype through a WebView.
+The web prototype is playable from `index.html`. The Android wrapper scaffold exists under `/android` and copies the same static prototype into WebView assets before the Gradle debug build.
 
 ## Android status
 
@@ -32,8 +33,8 @@ The Android project uses:
 
 ```text
 package: com.gravesmoke.road
-versionCode: 78
-versionName: 0.7.8
+versionCode: 80
+versionName: 0.8.0-dev1
 minSdk: 23
 targetSdk: 35
 compileSdk: 35
@@ -45,25 +46,27 @@ A debug APK workflow exists at:
 .github/workflows/android-debug.yml
 ```
 
-The Android wrapper is now scaffolded, but still needs real CI verification before treating the APK as install-ready.
+The Android wrapper is scaffolded, but gameplay stability and data validation remain the priority before treating APK output as install-ready.
 
-## v0.7.8 focus
+## v0.8.0-dev1 focus
 
+- Greyhook Fortress complete-flow pass
+- structured `data/greyhook_v08.json` for chapter metadata, approaches, scenes, prisoner choices, companion reactions, enemy interference, and acceptance criteria
+- dev-only “Jump to Greyhook test state” helper
+- Greyhook route families: supply escort, quartermaster blackmail, infirmary, forged transfer, captured-inside, escape
 - Greyhook alert ladder: routine, tightened searches, lockdown, forced escape/capture
-- alert-driven Greyhook consequences: patrol confrontation, escape mark, forced escape, deliberate capture route
-- companion reactions to prisoner fate
-- party morale tracking
-- camp actions tied to Greyhook: plan escape / reduce alert, debrief prisoner choice
-- Greyhook chapter resolution card
-- new support items and leads: Greyhook Escape Mark, Companion Objection Note, Greyhook Escape Route
+- sealed-prisoner choices: question, extract, silence, trade
+- visible Case Board sections for objective, routes, interior status, prisoner fate, alert, reactions, consequences, and next step
+- faction, morale, crime, and next-hook consequences
+- validator coverage for Greyhook v0.8 data references
 
 ## Core loop
 
 ```text
-character origin
+character identity / starting enemy
 → companion draft
 → node travel
-→ case board
+→ Case Board
 → leads and clues
 → papers / warrants / reputation
 → approach choice
@@ -83,12 +86,11 @@ python3 -m http.server 8080
 
 ## Next milestone
 
-**v0.8 — Greyhook Fortress vertical slice**
+**v0.8 — Greyhook Fortress vertical slice stabilization**
 
 Goals:
 
-- complete Greyhook as a proper vertical slice chapter
-- make alert change exits, patrols, dialogue, and route availability throughout Greyhook
-- deepen companion reactions and loyalty/morale consequences
-- expand aftermath of prisoner choice across factions and starting enemy pressure
+- manually play the web flow from new game to Greyhook aftermath
+- fix any stuck states found during playthrough
 - verify the Android debug APK workflow and fix build issues found by CI
+- install APK on device and confirm WebView asset loading plus localStorage persistence
