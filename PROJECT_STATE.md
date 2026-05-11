@@ -56,6 +56,10 @@ v0.8.0-dev1 currently includes:
 - companion reaction cards and morale changes
 - faction, legal/crime, and next-hook consequences
 - expanded Case Board sections in progress
+- current-objective guidance across the main screens
+- direct route travel from Case Board and objective buttons
+- scrollable centered map layout for manual testing
+- camp save export/import/reset tools
 - validation for Greyhook data references
 - Greyhook topology validation for route reachability, lower-cell access, escape providers, prisoner choices, companion reactions, and acceptance criteria
 - Android WebView wrapper scaffold at versionCode 80 / versionName 0.8.0-dev1
@@ -72,7 +76,7 @@ npm run android:debug
 
 ## Known risks / next checks
 
-- The web flow must still be manually played from new game to Greyhook aftermath to catch UX-level stuck states that topology validation cannot see.
+- The web flow now has a browser-smoked path from party start through Greyhook prisoner resolution and Synod Archive hook; more prisoner-fate variants still need manual passes.
 - `src/main.js` still contains some hardcoded Greyhook flow logic and should be the next runtime stabilization target.
 - Android WebView loading must be verified on device through the generated debug APK.
 - Android debug workflow should be run only after `npm run validate` passes.

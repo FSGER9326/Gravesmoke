@@ -28,6 +28,9 @@
   - trade
 - Added prisoner-choice faction consequences, morale changes, item rewards, crimes, next hooks, and companion reactions.
 - Added Greyhook aftermath resolution and Synod Archive hook.
+- Added a playability pass with a persistent current-objective panel, direct route travel from guidance buttons, and check score visibility on route cards.
+- Improved the map for testing with a larger scrollable layout, current-node centering, and cleaner mobile-friendly panel styling.
+- Added camp testing tools for forage/rest recovery plus save-code export, import, and reset.
 - Expanded validator to check the v0.8 Greyhook data file.
 - Added `tools/validate-greyhook-flow.js` to validate Greyhook route topology, climax reachability, lower-cell entry routes, escape-route providers, prisoner choice coverage, companion reactions, and acceptance criteria.
 - Wired the Greyhook flow validator into `npm run validate` and exposed it as `npm run validate:greyhook`.
