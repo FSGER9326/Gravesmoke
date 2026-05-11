@@ -1,0 +1,22 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "oh-my-openagent",
+    "./.opencode/plugins/gravesmoke-memory.js"
+  ],
+  "instructions": [
+    "PROJECT_MEMORY.md",
+    "PROJECT_STATE.md",
+    "CHANGELOG.md",
+    "docs/ROADMAP.md"
+  ],
+  "permission": {
+    "skill": {
+      "*": "allow",
+      "gravesmoke-*": "allow"
+    },
+    "bash": {
+      "*": "allow"
+    }
+  }
+}
