@@ -111,7 +111,7 @@
     "trade": {"mara": "Mara dislikes selling a tactical problem to a worse tactician.", "hadrik": "Hadrik calls it paid betrayal.", "nell": "Nell refuses to look at the receipt.", "sarn": "Sarn checks whether the betrayal receipt is genuine.", "ilyra": "Ilyra treats the trade like a wound that will rot.", "cael": "Cael says some bargains cannot be washed clean.", "brig": "Brig respects the profit and not much else.", "miren": "Miren wonders who bought the name underneath the prisoner."}
   },
   "enemyInterference": {
-    "wanted": {"name": "Sergeant Varric Kelm", "triggers": ["forgery", "lockdown", "high_alert"], "effect": "recognizes a forged pattern, raises alert, and can frame the party during lockdown."},
+    "wanted": {"name": "Sergeant Varric Kelm", "triggers": ["forgery", "high_alert"], "effect": "recognizes a forged pattern, raises alert, and can frame the party during high alert."},
     "debtor": {"name": "Marta Red-Sum", "triggers": ["blackmail", "trade", "quartermaster"], "effect": "offers debt relief for betrayal and tries to buy the same quartermaster leverage."},
     "shamed": {"name": "Prior Halvek", "triggers": ["infirmary", "question", "mercy"], "effect": "blocks infirmary grace and demands confession or prisoner handover."},
     "cursed": {"name": "The Ash-Sleeved Stranger", "triggers": ["prisoner_contact", "extract", "crown_of_ash"], "effect": "wants the prisoner alive and raises the Cinder Veil ritual clock."}
