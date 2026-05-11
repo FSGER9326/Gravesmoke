@@ -42,13 +42,29 @@ src/**
 data/**
 ```
 
-The app then loads:
+The app now serves those copied files through AndroidX `WebViewAssetLoader` instead of loading them directly through `file://`.
+
+The app entrypoint is:
 
 ```text
-file:///android_asset/index.html
+https://appassets.androidplatform.net/assets/index.html
 ```
 
-The WebView enables JavaScript, DOM storage, database storage, file access, content access, and file-URL access so local save data and local JSON fetches have the best chance to work.
+The `/assets/` path is mapped to the Android app asset directory, so relative browser paths such as `src/main.js`, `src/styles.css`, `data/game_data.json`, and `data/greyhook_v08.json` resolve under the same origin.
+
+This is intended to reduce the previous blank-screen risk from `file://` + ES module/fetch restrictions while keeping the prototype fully offline and bundled inside the APK.
+
+The WebView enables JavaScript, DOM storage, and database storage for the prototype. Direct file/content access and file-URL cross access are deliberately disabled because the asset loader provides the local HTTPS-like origin.
+
+## Runtime validation
+
+`npm run validate` now checks both the web runtime and Android wrapper wiring:
+
+- `index.html` still exposes the expected app/nav roots and module script.
+- `src/main.js` still loads both game data files and passes module syntax validation.
+- `MainActivity.java` still uses `WebViewAssetLoader`.
+- `MainActivity.java` still loads `https://appassets.androidplatform.net/assets/index.html`.
+- `MainActivity.java` must not regress to `file:///android_asset/index.html`.
 
 ## CI workflow
 
@@ -75,9 +91,9 @@ gradle -p android assembleDebug
 
 ## Remaining risks
 
-- WebView local module and JSON loading must be tested on device.
-- If the APK opens blank, the likely cause remains `file://` + ES module/fetch restrictions.
-- If asset loading fails, switch from direct `file:///android_asset/index.html` loading to a safer local asset-loading strategy before adding release signing.
+- WebView local module and JSON loading must still be tested on device.
+- If the APK opens blank after the asset-loader change, inspect Android logcat for JavaScript module, fetch, CSP, or missing-asset errors.
+- Confirm localStorage save persistence under the asset-loader origin before treating APK output as stable.
 - Once debug builds work reliably, add a release workflow.
 
 ## Near-term Android tasks
