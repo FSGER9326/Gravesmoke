@@ -18,22 +18,25 @@
     "greyhook": {
       "supply": {
         "label": "Supply escort",
+        "family": "honorable mercenary route",
         "requiresAnySolution": ["greyhook_supply_route"],
         "entryNode": "greyhook_outer_yard",
         "keepsWeapons": true,
         "alert": 1,
-        "text": "Enter as paid supply protection. Clean, armed, and watched."
+        "text": "Enter as paid supply protection. Clean, armed, watched, and legible to Free Spears or martial parties."
       },
       "blackmail": {
         "label": "Quartermaster blackmail",
+        "family": "criminal leverage route",
         "requiresAnySolution": ["quartermaster_blackmail_route"],
         "entryNode": "greyhook_outer_yard",
         "keepsWeapons": true,
         "alert": 1,
-        "text": "Force the quartermaster to open a service path. Useful and poisonous."
+        "text": "Force the quartermaster to open a service path. Useful and poisonous; the same leverage can be turned against you."
       },
       "infirmary": {
         "label": "Infirmary route",
+        "family": "faith, mercy, or healer route",
         "requiresAnySolution": ["infirmary_route"],
         "entryNode": "fortress_infirmary",
         "keepsWeapons": false,
@@ -42,63 +45,87 @@
       },
       "forgery": {
         "label": "Forged transfer",
+        "family": "paper and thief route",
         "requiresAnySolution": ["transfer_forgery_route"],
         "entryNode": "lower_cells",
         "keepsWeapons": false,
         "alert": 3,
         "failureRoute": "captured",
-        "text": "Use a forged prisoner transfer order. Fastest route, highest inspection risk."
+        "text": "Use a forged prisoner transfer order. Fastest route to the lower cells, highest inspection risk."
       },
       "captured": {
         "label": "Captured-inside route",
+        "family": "failed-forward route",
         "requiresAnySolution": [],
         "entryNode": "lower_cells",
         "keepsWeapons": false,
         "alert": 2,
-        "text": "Stage an arrest or accept a failed-forward capture. Ugly, costly, never a game over."
+        "text": "Stage an arrest, accept a failed transfer, or turn a hard failure into position near the lower cells. Ugly, costly, never a game over."
       },
       "escape": {
         "label": "Escape route",
+        "family": "scout and high-alert recovery route",
         "requiresAnySolution": ["greyhook_escape"],
         "entryNode": "grey_road",
         "keepsWeapons": true,
         "alert": -2,
-        "text": "A drainage mark and timing window used to survive lockdown."
+        "text": "A drainage mark and timing window used to survive lockdown or extraction aftermath."
       }
     }
   },
   "scenes": {
-    "gate_search": {"node": "greyhook_gate", "alertChange": 0, "clue": "Gate search pattern: papers, weapons, intent."},
-    "yard_patrols": {"node": "greyhook_outer_yard", "alertChange": 0, "clue": "Patrols thin near the infirmary bell."},
-    "quartermaster_lockbox": {"node": "quartermaster_tent", "requiresAnySolution": ["quartermaster_blackmail_route"], "item": "lower_cell_ring_key", "clue": "Lower-cell ring key acquired from the lockbox."},
-    "infirmary_records": {"node": "fortress_infirmary", "item": "nameless_prisoner_note", "clue": "No rites. No visitors. No name. Crown witness."},
-    "lower_cell_access": {"node": "lower_cells", "requiresAnyItem": ["lower_cell_ring_key", "greyhook_infirmary_seal", "prisoner_transfer_forgery"], "clue": "The sealed row is reachable."},
-    "archive_hook": {"node": "synod_archive", "item": "dead_name_index_scrap", "clue": "The Dead-Name Index points beyond Greyhook."}
+    "gate_search": {"node": "greyhook_gate", "label": "Gate Search Pattern", "alertChange": 0, "item": "greyhook_search_stamp", "clue": "Gate search pattern learned: papers first, weapons second, intent last."},
+    "forged_papers_inspection": {"node": "greyhook_gate", "label": "Forged Papers Inspection", "requiresAnyItem": ["prisoner_transfer_forgery", "forged_papers"], "alertChange": 1, "clue": "The forged papers survive close inspection, but the ink is remembered."},
+    "staged_arrest": {"node": "greyhook_gate", "label": "Stage Arrest", "alertChange": 2, "solution": "captured_inside_route", "clue": "The staged arrest works: painful, public, and close to the lower cells."},
+    "enemy_recognition": {"node": "greyhook_gate", "label": "Enemy Recognition", "alertChange": 1, "clue": "A personal enemy has a way to make Greyhook look twice."},
+    "yard_patrols": {"node": "greyhook_outer_yard", "label": "Study Patrols", "alertChange": 0, "clue": "Patrols thin near the infirmary bell and thicken after the second watch horn."},
+    "companion_greyhook_angle": {"node": "greyhook_outer_yard", "label": "Companion Greyhook Angle", "alertChange": 0, "clue": "A companion finds a route-shaped weakness in Greyhook's routine."},
+    "starting_enemy_interference": {"node": "greyhook_outer_yard", "label": "Starting Enemy Interference", "alertChange": 1, "clue": "Your starting enemy turns Greyhook's order against you."},
+    "patrol_confrontation": {"node": "greyhook_outer_yard", "label": "Patrol Confrontation", "alertChange": 1, "clue": "A patrol confrontation leaves your faces better remembered."},
+    "search_escape_mark": {"node": "greyhook_outer_yard", "label": "Search for Escape Mark", "item": "greyhook_escape_mark", "solution": "greyhook_escape", "alertChange": 0, "clue": "Escape mark found near the drainage stair."},
+    "quartermaster_lockbox": {"node": "quartermaster_tent", "label": "Search Lockbox", "requiresAnySolution": ["quartermaster_blackmail_route"], "item": "lower_cell_ring_key", "alertChange": 0, "clue": "Lower-cell ring key acquired from the quartermaster lockbox."},
+    "trace_missing_supplies": {"node": "quartermaster_tent", "label": "Trace Missing Supplies", "item": "quartermaster_blackmail", "solution": "quartermaster_blackmail_route", "alertChange": 0, "clue": "Missing supplies trace back to the quartermaster's private ledger."},
+    "threaten_bribe_bargain": {"node": "quartermaster_tent", "label": "Threaten / Bribe / Bargain", "requiresAnyItem": ["quartermaster_blackmail"], "alertChange": 1, "clue": "The quartermaster opens the service path and starts planning revenge."},
+    "respect_infirmary_restriction": {"node": "fortress_infirmary", "label": "Respect Infirmary Restriction", "solution": "infirmary_route", "alertChange": -1, "clue": "Visible restraint makes the infirmary route safer than armed escort work."},
+    "infirmary_records": {"node": "fortress_infirmary", "label": "Search Patient Records", "item": "nameless_prisoner_note", "alertChange": 0, "clue": "No rites. No visitors. No name. Crown witness."},
+    "treat_wounded_soldier": {"node": "fortress_infirmary", "label": "Treat Wounded Soldier", "solution": "infirmary_route", "alertChange": -1, "clue": "A wounded soldier remembers mercy better than orders."},
+    "lower_cell_access": {"node": "lower_cells", "label": "Use Lower-Cell Access", "requiresAnyItem": ["lower_cell_ring_key", "greyhook_infirmary_seal", "prisoner_transfer_forgery"], "alertChange": 0, "clue": "The sealed row is reachable."},
+    "captured_inside": {"node": "lower_cells", "label": "Captured Inside", "solution": "captured_inside_route", "alertChange": 0, "clue": "Capture becomes a route: bruised, searched, and near the sealed row."},
+    "talk_past_cell_guard": {"node": "lower_cells", "label": "Talk Past Cell Guard", "alertChange": 1, "clue": "The cell guard can be delayed, not fooled forever."},
+    "smuggle_message": {"node": "lower_cells", "label": "Smuggle Message", "item": "nameless_prisoner_note", "alertChange": 1, "clue": "A message reaches the sealed prisoner before you do."},
+    "first_contact": {"node": "sealed_prisoner_cell", "label": "First Contact", "alertChange": 0, "clue": "The prisoner whispers: The Crown of Ash was a right to name the dead."},
+    "archive_hook": {"node": "synod_archive", "label": "Read Dead-Name Index", "item": "dead_name_index_scrap", "alertChange": 0, "clue": "The Dead-Name Index points beyond Greyhook."},
+    "archive_seal": {"node": "synod_archive", "label": "Find Archive Seal", "item": "dead_name_index_scrap", "alertChange": 0, "clue": "An archive seal names the Crown of Ash without explaining it."},
+    "bell_underwater": {"node": "synod_archive", "label": "Hear the Bell Underwater", "alertChange": 0, "clue": "Somewhere under Greyhook, a bell rings as if under water."}
   },
   "prisonerChoices": {
-    "question": {"label": "Question", "outcome": "truth secured", "item": "prisoner_statement", "morale": 1, "factionDeltas": {"hearth": 5, "synod": 3, "iron": -2}, "alert": 0, "nextHook": "The prisoner names the Dead-Name Index."},
-    "extract": {"label": "Extract", "outcome": "living witness burden", "item": "prisoner_transfer_token", "morale": 1, "factionDeltas": {"hearth": 5, "rook": 3, "iron": -5}, "alert": 2, "requiresEscape": true, "nextHook": "The living witness must be hidden before the Synod Archive can be reached."},
-    "silence": {"label": "Silence", "outcome": "witness silenced", "item": "silenced_witness_mark", "morale": -2, "factionDeltas": {"red": 10, "hearth": -10, "synod": -5}, "alert": 1, "crime": "murdered Greyhook witness", "nextHook": "The dead still have names, and someone heard the silence."},
-    "trade": {"label": "Trade", "outcome": "prisoner traded", "item": "greyhook_betrayal_receipt", "morale": -1, "factionDeltas": {"iron": 8, "red": 8, "rook": -5}, "alert": 0, "crime": "betrayed Greyhook witness", "nextHook": "The buyer mentions the Dead-Name Index."}
+    "question": {"label": "Question", "outcome": "Truth Secured", "item": "prisoner_statement", "morale": 1, "factionDeltas": {"hearth": 5, "synod": 3, "iron": -2}, "alert": 0, "nextHook": "The prisoner names the Dead-Name Index."},
+    "extract": {"label": "Extract", "outcome": "Extraction Prepared", "item": "prisoner_transfer_token", "morale": 1, "factionDeltas": {"hearth": 5, "rook": 3, "iron": -5}, "alert": 2, "requiresEscape": true, "nextHook": "The living witness must be hidden before the Synod Archive can be reached."},
+    "silence": {"label": "Silence", "outcome": "Witness Silenced", "item": "silenced_witness_mark", "morale": -2, "factionDeltas": {"red": 10, "hearth": -10, "synod": -5}, "alert": 1, "crime": "murdered Greyhook witness", "nextHook": "The dead still have names, and someone heard the silence."},
+    "trade": {"label": "Trade", "outcome": "Prisoner Traded", "item": "greyhook_betrayal_receipt", "morale": -1, "factionDeltas": {"iron": 8, "red": 8, "rook": -5}, "alert": 0, "crime": "betrayed Greyhook witness", "nextHook": "The buyer mentions the Dead-Name Index."}
   },
   "companionReactions": {
-    "question": {"mara": "Mara respects a truth taken without wasting the exit.", "hadrik": "Hadrik calls it the first honorable thing Greyhook has seen today.", "nell": "Nell is relieved the locked-door person was treated like a person.", "sarn": "Sarn asks whether the statement can be copied twice.", "ilyra": "Ilyra approves. Mercy and evidence rarely walk together.", "brig": "Brig thinks an answer is less useful than leverage.", "miren": "Miren listens to what the prisoner refuses to say."},
-    "extract": {"mara": "Mara starts counting routes out before anyone asks.", "hadrik": "Hadrik treats extraction like a soldier's burden.", "nell": "Nell checks every hinge and every conscience.", "sarn": "Sarn wants a receipt for the living witness.", "ilyra": "Ilyra accepts the risk because the prisoner still breathes.", "brig": "Brig smiles at the coming chase.", "miren": "Miren says living witnesses cast longer shadows."},
-    "silence": {"mara": "Mara says nothing, which is worse than anger.", "hadrik": "Hadrik marks the act and does not forgive it yet.", "nell": "Nell hates killing someone already locked away.", "sarn": "Sarn notes that silence is portable leverage.", "ilyra": "Ilyra is shaken by the murder of a patient in all but name.", "brig": "Brig approves of fewer mouths and fewer witnesses.", "miren": "Miren listens for the dead name left behind."},
-    "trade": {"mara": "Mara dislikes selling a tactical problem to a worse tactician.", "hadrik": "Hadrik calls it paid betrayal.", "nell": "Nell refuses to look at the receipt.", "sarn": "Sarn checks whether the betrayal receipt is genuine.", "ilyra": "Ilyra treats the trade like a wound that will rot.", "brig": "Brig respects the profit and not much else.", "miren": "Miren wonders who bought the name underneath the prisoner."}
+    "question": {"mara": "Mara respects a truth taken without wasting the exit.", "hadrik": "Hadrik calls it the first honorable thing Greyhook has seen today.", "nell": "Nell is relieved the locked-door person was treated like a person.", "sarn": "Sarn asks whether the statement can be copied twice.", "ilyra": "Ilyra approves. Mercy and evidence rarely walk together.", "cael": "Cael names the choice mercy with usable edges.", "brig": "Brig thinks an answer is less useful than leverage.", "miren": "Miren listens to what the prisoner refuses to say."},
+    "extract": {"mara": "Mara starts counting routes out before anyone asks.", "hadrik": "Hadrik treats extraction like a soldier's burden.", "nell": "Nell checks every hinge and every conscience.", "sarn": "Sarn wants a receipt for the living witness.", "ilyra": "Ilyra accepts the risk because the prisoner still breathes.", "cael": "Cael is already planning who must hide the witness next.", "brig": "Brig smiles at the coming chase.", "miren": "Miren says living witnesses cast longer shadows."},
+    "silence": {"mara": "Mara says nothing, which is worse than anger.", "hadrik": "Hadrik marks the act and does not forgive it yet.", "nell": "Nell hates killing someone already locked away.", "sarn": "Sarn notes that silence is portable leverage.", "ilyra": "Ilyra is shaken by the murder of a patient in all but name.", "cael": "Cael writes the death down because someone should.", "brig": "Brig approves of fewer mouths and fewer witnesses.", "miren": "Miren listens for the dead name left behind."},
+    "trade": {"mara": "Mara dislikes selling a tactical problem to a worse tactician.", "hadrik": "Hadrik calls it paid betrayal.", "nell": "Nell refuses to look at the receipt.", "sarn": "Sarn checks whether the betrayal receipt is genuine.", "ilyra": "Ilyra treats the trade like a wound that will rot.", "cael": "Cael says some bargains cannot be washed clean.", "brig": "Brig respects the profit and not much else.", "miren": "Miren wonders who bought the name underneath the prisoner."}
   },
   "enemyInterference": {
-    "wanted": {"name": "Sergeant Varric Kelm", "triggers": ["forgery", "lockdown"], "effect": "Recognizes papers and raises alert."},
-    "debtor": {"name": "Marta Red-Sum", "triggers": ["blackmail", "trade"], "effect": "Offers debt relief for betrayal."},
-    "shamed": {"name": "Prior Halvek", "triggers": ["infirmary", "question"], "effect": "Demands confession or prisoner handover."},
-    "cursed": {"name": "The Ash-Sleeved Stranger", "triggers": ["prisoner_contact", "extract"], "effect": "Wants the witness alive and named."}
+    "wanted": {"name": "Sergeant Varric Kelm", "triggers": ["forgery", "lockdown", "high_alert"], "effect": "recognizes a forged pattern, raises alert, and can frame the party during lockdown."},
+    "debtor": {"name": "Marta Red-Sum", "triggers": ["blackmail", "trade", "quartermaster"], "effect": "offers debt relief for betrayal and tries to buy the same quartermaster leverage."},
+    "shamed": {"name": "Prior Halvek", "triggers": ["infirmary", "question", "mercy"], "effect": "blocks infirmary grace and demands confession or prisoner handover."},
+    "cursed": {"name": "The Ash-Sleeved Stranger", "triggers": ["prisoner_contact", "extract", "crown_of_ash"], "effect": "wants the prisoner alive and raises the Cinder Veil ritual clock."}
   },
   "acceptance": [
-    "Greyhook has four or more entry routes.",
+    "New game can reach Greyhook naturally.",
+    "Greyhook has at least four viable entry routes.",
     "Failed entry can open captured-inside route.",
-    "Alert changes visible options.",
+    "Alert changes available options.",
+    "Alert 4+ creates lockdown pressure.",
+    "Alert 5+ creates escape/capture pressure.",
     "The prisoner can be questioned, extracted, silenced, or traded.",
-    "Companion reactions and morale are visible.",
-    "A chapter aftermath card appears."
+    "Companion reactions, morale, faction reputation, and legal record are visible.",
+    "A Greyhook outcome and next chapter hook appear on the Case Board.",
+    "Game data passes npm run validate."
   ]
 }
