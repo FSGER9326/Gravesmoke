@@ -834,3 +834,57 @@ body {
   font-size: 12px;
   margin-bottom: 4px;
 }
+
+.nameInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #4a3324;
+  border-radius: 6px;
+  background: #0d0a08;
+  color: #eadfcc;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.xpBar {
+  display: inline-block;
+  width: 100%;
+  height: 16px;
+  border: 1px solid #3d2b20;
+  border-radius: 8px;
+  background: #0d0a08;
+  position: relative;
+  overflow: hidden;
+  font-size: 10px;
+  color: #d4b478;
+  line-height: 16px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.xpFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #3a5a2a, #5a8a3a);
+  border-radius: 8px;
+  transition: width 0.3s;
+}
+
+.roadEventPanel {
+  border-color: #5a4a2a !important;
+}
+
+.roadEventPanel h2 {
+  color: #e4b854;
+}
+
+.settlementPanel {
+  border-color: #4a554a !important;
+}
+
+.settlementPanel h2 {
+  color: #a8c4a0;
+}

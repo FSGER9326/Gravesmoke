@@ -135,10 +135,13 @@ const requiredSaveKeys = [
   'saveVersion',
   'screen', 'node', 'log', 'party', 'pool', 'stats', 'res', 'fac',
   'crimes', 'leads', 'solutions', 'items', 'clues', 'flags',
+  'name', 'origin', 'backgroundTitle', 'xp', 'level', 'perkPoints', 'perks', 'traits',
+  'wounds', 'fatigue', 'settlement', 'district', 'settlementVisited', 'roadEventsSeen',
   'greyhook', 'greyhookInside', 'greyhookRoute', 'greyhookAlert',
   'prisonerContact', 'prisonerChoice', 'prisonerOutcome',
   'morale', 'reactions', 'aftermath',
-  'enemyType', 'enemyPressure', 'routeHistory', 'consequenceLog'
+  'enemyType', 'enemyPressure', 'routeHistory', 'consequenceLog',
+  'companionState'
 ];
 
 const blankMatch = main.match(/const blank=\(\)=>\(([\s\S]+?)\n\}\);/);

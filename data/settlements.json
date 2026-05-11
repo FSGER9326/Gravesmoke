@@ -1,0 +1,47 @@
+{
+  "version": "0.8.2-dev1",
+  "settlements": {
+    "gallowsford": {
+      "name": "Gallowsford",
+      "desc": "A starved market town sewn into the mouth of the Grey Road. Paper moves faster than bread here; coin moves faster than both.",
+      "districts": ["gate","market","chapel","inn","ditch"],
+      "factionOwner": "iron",
+      "legalPressure": 2,
+      "entryRequirements": [],
+      "services": [
+        {"id":"buy_food_gford","label":"Buy food at the market","cost":3,"effect":{"food":2,"coin":-3},"desc":"Grain, hard cheese, dried mutton."},
+        {"id":"rest_inn_gford","label":"Rest at the Black Lantern Inn","cost":2,"effect":{"fatigue":-2,"heat":-1,"coin":-2},"desc":"A room with doors that lock."},
+        {"id":"rumor_inn_gford","label":"Hear a rumor at the inn","cost":1,"effect":{"coin":-1,"action":"rumor"},"desc":"The innkeeper knows more than her patrons."},
+        {"id":"seek_papers_gford","label":"Seek papers at the gate","cost":4,"effect":{"coin":-4,"action":"seekPapers"},"desc":"An Iron Lantern clerk can issue travel writs — for a fee."},
+        {"id":"rookery_contact_gford","label":"Visit the rookery drain contact","cost":2,"effect":{"coin":-2,"fac":{"rook":2},"action":"rookeryContact"},"desc":"Below the ditch, a door you remember."},
+        {"id":"heal_chapel_gford","label":"Ask the chapel for healing","cost":1,"effect":{"medicine":1,"wounds":-1,"coin":-1},"desc":"Sister Reed knows every prayer that still works."}
+      ]
+    },
+    "greyhook_fortress": {
+      "name": "Greyhook Fortress",
+      "desc": "Greyhook rises like a clenched jaw. Three searches. No humor. Even the chaplains carry keys they are not supposed to use.",
+      "districts": ["greyhook_gate","greyhook_outer_yard","fortress_infirmary","lower_cells","sealed_prisoner_cell","quartermaster_tent"],
+      "factionOwner": "iron",
+      "legalPressure": 5,
+      "entryRequirements": ["greyhook_inside_or_route"],
+      "services": [
+        {"id":"bribe_gate_greyhook","label":"Bribe a gate guard","cost":5,"effect":{"coin":-5,"fac":{"iron":2},"clue":"Gate guard bribed inside Greyhook."},"desc":"Expensive and remembered."},
+        {"id":"infirmary_cover_greyhook","label":"Seek infirmary cover","cost":0,"effect":{"action":"infirmaryCover"},"desc":"Only available with infirmary route access. Medical cover lowers alert."},
+        {"id":"quartermaster_deal_greyhook","label":"Treat with the quartermaster","cost":3,"effect":{"coin":-3,"action":"quartermasterDeal"},"desc":"The quartermaster trades keys for plausible deniability."}
+      ]
+    },
+    "synod_archive": {
+      "name": "Synod Archive",
+      "desc": "Tall shelves, thinner air, and more names than the living are allowed to speak. The scribes do not look up often.",
+      "districts": ["synod_archive"],
+      "factionOwner": "synod",
+      "legalPressure": 3,
+      "entryRequirements": ["synod_or_greyhook_resolved"],
+      "services": [
+        {"id":"read_index_synod","label":"Read the Dead-Name Index","cost":0,"effect":{"action":"scene_archive_hook"},"desc":"The index points beyond Greyhook."},
+        {"id":"ask_scribe_synod","label":"Ask a scribe about the archive","cost":2,"effect":{"coin":-2,"fac":{"synod":2},"clue":"A scribe mentions Crown-of-Ash wards."},"desc":"Scribes remember what they read but not who asked."},
+        {"id":"find_ritual_license_synod","label":"Seek ritual license","cost":4,"effect":{"coin":-4,"item":"ritual_notation_scrap","clue":"A ritual license mentions sealed testimony."},"desc":"An old license grants religious access to sealed documents."}
+      ]
+    }
+  }
+}

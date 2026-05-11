@@ -1,0 +1,101 @@
+{
+  "version": "0.8.2-dev1",
+  "origins": {
+    "ash_writ_deserter": {
+      "name": "Ash-Writ Deserter",
+      "desc": "You walked away from a military pyre. The writ still burns.",
+      "backgroundTitle": "Broken Writ",
+      "stats": {"body": 2, "resolve": 1},
+      "item": "deserter_military_writ",
+      "factionDelta": {"free": 5, "iron": -3},
+      "enemyType": "wanted",
+      "checkBonus": "Martial supply and Free Spear checks take +1.",
+      "drawback": "Iron Lantern patrols recognize deserter patterns. Higher patrol heat.",
+      "flavor": "The ash never entirely washed out."
+    },
+    "ledger_thief": {
+      "name": "Ledger-Thief of Gallowsford",
+      "desc": "The first page you stole was proof of a crime you hadn't committed yet.",
+      "backgroundTitle": "Stolen Page",
+      "stats": {"guile": 2, "wits": 1},
+      "item": "stolen_ledger_scrap",
+      "factionDelta": {"rook": 5, "red": 3},
+      "enemyType": "wanted",
+      "checkBonus": "Blackmail, paper, and Rookery checks take +1.",
+      "drawback": "Legal pressure ticks upward. Gallowsford remembers its missing pages.",
+      "flavor": "You can still smell the inkwell you knocked over."
+    },
+    "synod_scribe": {
+      "name": "Disgraced Synod Scribe",
+      "desc": "You copied one prayer too many and learned what the saints erased.",
+      "backgroundTitle": "Erased Verse",
+      "stats": {"wits": 2, "presence": 1},
+      "item": "ritual_notation_scrap",
+      "factionDelta": {"synod": 5, "veil": 3},
+      "enemyType": "shamed",
+      "checkBonus": "Synod, infirmary, and ritual checks take +1.",
+      "drawback": "Prior Halvek marked your name. Faith routes close faster under scrutiny.",
+      "flavor": "The erased verse still rhymes in the dark."
+    },
+    "free_spear_bastard": {
+      "name": "Free Spear Bastard",
+      "desc": "Your father rode with the Compact. Your mother buried him before you could.",
+      "backgroundTitle": "Unproven Spear",
+      "stats": {"body": 2, "presence": 1},
+      "item": "free_spear_token",
+      "factionDelta": {"free": 8, "synod": -3},
+      "enemyType": "wanted",
+      "checkBonus": "Supply escort and Free Spear checks take +1.",
+      "drawback": "The Synod sees Free Spear blood and marks you as unreliable.",
+      "flavor": "You wear no spear but everyone looks for one anyway."
+    },
+    "rookery_door_man": {
+      "name": "Rookery Door-Man",
+      "desc": "You kept a door no one was supposed to find and let through a debt no one could pay.",
+      "backgroundTitle": "Door-Keeper",
+      "stats": {"guile": 2, "presence": 1},
+      "item": "underdoor_token",
+      "factionDelta": {"rook": 8, "red": -3},
+      "enemyType": "debtor",
+      "checkBonus": "Undercity, Rookery, and sly route checks take +1.",
+      "drawback": "The Red Ledger knows every door you opened. Debt pressure deepens.",
+      "flavor": "You still flinch when hinges creak."
+    },
+    "red_ledger_debtor": {
+      "name": "Red Ledger Debtor",
+      "desc": "You signed with blood and borrowed a name. The interest is still collecting.",
+      "backgroundTitle": "Blood Debt",
+      "stats": {"guile": 2, "wits": 1},
+      "item": "debt_mark_token",
+      "factionDelta": {"red": 8, "hearth": -5},
+      "enemyType": "debtor",
+      "checkBonus": "Blackmail, debt, and Red Ledger route checks take +1.",
+      "drawback": "Debt pressure rises over time. The Ledger never forgets.",
+      "flavor": "The debt mark still stings when someone speaks your true name."
+    },
+    "cinder_veil_touched": {
+      "name": "Cinder Veil Touched",
+      "desc": "A dead voice spoke your name once. It hasn't stopped yet.",
+      "backgroundTitle": "Ash-Voice",
+      "stats": {"resolve": 2, "presence": 1},
+      "item": "ash_charm",
+      "factionDelta": {"veil": 8, "synod": -3},
+      "enemyType": "cursed",
+      "checkBonus": "Occult, Cinder Veil, and Synod Archive checks take +1.",
+      "drawback": "The Ash-Sleeved Stranger notices when you listen. Uncanny pressure builds.",
+      "flavor": "You hear bells other people can't."
+    },
+    "hearthbound_corpse_kin": {
+      "name": "Hearthbound Corpse-Kin",
+      "desc": "You buried half your family before you turned sixteen. The other half buried you in debt and prayer.",
+      "backgroundTitle": "Grave-Giver",
+      "stats": {"presence": 2, "resolve": 1},
+      "item": "burial_token",
+      "factionDelta": {"hearth": 8, "red": -3},
+      "enemyType": "shamed",
+      "checkBonus": "Hearth, mercy, and Synod mercy checks take +1.",
+      "drawback": "The dead-name plot draws you closer. Refusing mercy hurts worse.",
+      "flavor": "You can still smell the funeral lilies."
+    }
+  }
+}

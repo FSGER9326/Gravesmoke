@@ -1,6 +1,6 @@
 {
   "name": "gravesmoke-road",
-  "version": "0.8.1-dev1",
+  "version": "0.8.2-dev1",
   "private": true,
   "description": "Android-first dark fantasy RPG prototype.",
   "scripts": {
@@ -9,11 +9,14 @@
     "serve": "bash scripts/serve-web.sh",
     "sync": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/sync-github.ps1",
     "autosync": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/auto-sync-github.ps1",
-    "validate": "node tools/validate-game-data.js && node tools/validate-runtime.js && node tools/validate-greyhook-flow.js && node tools/validate-greyhook-playthrough.js",
+    "validate": "node tools/validate-game-data.js && node tools/validate-runtime.js && node tools/validate-greyhook-flow.js && node tools/validate-greyhook-playthrough.js && node tools/validate-progression.js && node tools/validate-travel.js && node tools/validate-settlements.js",
     "validate:data": "node tools/validate-game-data.js",
     "validate:runtime": "node tools/validate-runtime.js",
     "validate:greyhook": "node tools/validate-greyhook-flow.js",
     "validate:playthrough": "node tools/validate-greyhook-playthrough.js",
+    "validate:progression": "node tools/validate-progression.js",
+    "validate:travel": "node tools/validate-travel.js",
+    "validate:settlements": "node tools/validate-settlements.js",
     "android:debug": "bash scripts/build-android-debug.sh"
   },
   "devDependencies": {}

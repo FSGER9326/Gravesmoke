@@ -1,0 +1,99 @@
+{
+  "version": "0.8.2-dev1",
+  "xpThresholds": [0, 10, 25, 50, 85, 130],
+  "perks": {
+    "hard_road_feet": {
+      "name": "Hard Road Feet",
+      "category": "travel",
+      "desc": "The road is a teacher, and you paid attention.",
+      "effect": "Reduces road fatigue by 1 per day of travel.",
+      "implementedEffect": true,
+      "bonus": {"stat": "fatigue", "reduce": 1}
+    },
+    "false_seal_hand": {
+      "name": "False Seal Hand",
+      "category": "paper",
+      "desc": "You practiced on warrants no one was reading.",
+      "effect": "+2 to forgery and papers checks.",
+      "implementedEffect": true,
+      "bonus": {"stat": "guile", "condition": "forgery", "value": 2}
+    },
+    "cold_reader": {
+      "name": "Cold Reader",
+      "category": "social",
+      "desc": "People show their fears before they speak them.",
+      "effect": "+1 to presence checks involving interrogation or persuasion.",
+      "implementedEffect": true,
+      "bonus": {"stat": "presence", "value": 1}
+    },
+    "mercy_with_teeth": {
+      "name": "Mercy With Teeth",
+      "category": "mercy",
+      "desc": "Kindness that the guilty remember longer than a wound.",
+      "effect": "+1 morale on mercy or infirmary choices. Synod/Hearth presence bonus.",
+      "implementedEffect": true,
+      "bonus": {"stat": "presence", "condition": "mercy", "value": 1}
+    },
+    "camp_surgeon": {
+      "name": "Camp Surgeon",
+      "category": "healing",
+      "desc": "A needle and a prayer: sometimes it works.",
+      "effect": "Rest recovers 1 medicine value and reduces wounds by 1.",
+      "implementedEffect": true,
+      "bonus": {"heal": 1}
+    },
+    "door_sense": {
+      "name": "Door Sense",
+      "category": "scout",
+      "desc": "Every door has a second name.",
+      "effect": "+1 to escape and stealth route checks. Reduces alert when using escape routes.",
+      "implementedEffect": true,
+      "bonus": {"stat": "guile", "condition": "escape", "value": 1}
+    },
+    "red_debt_smile": {
+      "name": "Red Debt Smile",
+      "category": "blackmail",
+      "desc": "You know what a signature is worth when the ink is red.",
+      "effect": "+1 to blackmail, debt, and Red Ledger route checks.",
+      "implementedEffect": true,
+      "bonus": {"stat": "guile", "condition": "blackmail", "value": 1}
+    },
+    "ash_nerve": {
+      "name": "Ash-Nerve",
+      "category": "occult",
+      "desc": "The dead don't frighten you. The living do.",
+      "effect": "+1 resolve on occult or Cinder Veil checks. Minor high-alert resistance.",
+      "implementedEffect": true,
+      "bonus": {"stat": "resolve", "condition": "occult", "value": 1}
+    },
+    "quartermaster_eye": {
+      "name": "Quartermaster Eye",
+      "category": "supply",
+      "desc": "Numbers don't lie. But they do forget who counted them.",
+      "effect": "+1 to supply route, quartermaster, and trade checks.",
+      "implementedEffect": true,
+      "bonus": {"stat": "wits", "condition": "supply", "value": 1}
+    },
+    "campfire_authority": {
+      "name": "Campfire Authority",
+      "category": "leadership",
+      "desc": "People listen when you speak near fire.",
+      "effect": "+1 presence on camp and morale scenes. Companion loyalty rises faster.",
+      "implementedEffect": true,
+      "bonus": {"stat": "presence", "condition": "camp", "value": 1}
+    }
+  },
+  "xpAwards": {
+    "investigate_lead": {"amount": 3, "flag": "xp_lead", "desc": "Investigated a lead"},
+    "route_viable": {"amount": 2, "flag": "xp_route_viable", "desc": "Made a route viable"},
+    "ledger_resolved": {"amount": 5, "flag": "xp_ledger", "desc": "Resolved the Sealed Ledger"},
+    "enter_greyhook": {"amount": 5, "flag": "xp_enter_greyhook", "desc": "Entered Greyhook Fortress"},
+    "prisoner_contact": {"amount": 4, "flag": "xp_prisoner_contact", "desc": "Contacted the sealed prisoner"},
+    "prisoner_fate": {"amount": 6, "flag": "xp_prisoner_fate", "desc": "Chose prisoner fate"},
+    "resolve_greyhook": {"amount": 8, "flag": "xp_greyhook_resolved", "desc": "Resolved Greyhook chapter"},
+    "survive_high_alert": {"amount": 3, "flag": "xp_survive_alert", "desc": "Survived high alert pressure"},
+    "synod_hook": {"amount": 4, "flag": "xp_synod_hook", "desc": "Discovered Synod Archive hook"},
+    "road_event": {"amount": 1, "flag": "xp_road_event", "desc": "Encountered a road event"},
+    "settlement_service": {"amount": 1, "flag": "xp_settlement", "desc": "Used a settlement service"}
+  }
+}

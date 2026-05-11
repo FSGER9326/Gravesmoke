@@ -1,0 +1,145 @@
+{
+  "version": "0.8.2-dev1",
+  "nodeMeta": {
+    "gate": {"danger":1,"restSafety":"low","forageValue":1,"factionOwner":"iron","terrain":"settlement","settlementId":"gallowsford"},
+    "market": {"danger":1,"restSafety":"low","forageValue":1,"factionOwner":"iron","terrain":"settlement","settlementId":"gallowsford"},
+    "inn": {"danger":1,"restSafety":"medium","forageValue":0,"factionOwner":"none","terrain":"settlement","settlementId":"gallowsford"},
+    "chapel": {"danger":1,"restSafety":"medium","forageValue":0,"factionOwner":"synod","terrain":"settlement","settlementId":"gallowsford"},
+    "ditch": {"danger":2,"restSafety":"low","forageValue":2,"factionOwner":"rook","terrain":"settlement","settlementId":"gallowsford"},
+    "road": {"danger":2,"restSafety":"low","forageValue":1,"factionOwner":"none","terrain":"road"},
+    "tower": {"danger":3,"restSafety":"low","forageValue":1,"factionOwner":"none","terrain":"ruin"},
+    "mill": {"danger":3,"restSafety":"low","forageValue":2,"factionOwner":"none","terrain":"ruin"},
+    "ford": {"danger":3,"restSafety":"low","forageValue":1,"factionOwner":"none","terrain":"river"},
+    "shrine": {"danger":2,"restSafety":"medium","forageValue":0,"factionOwner":"synod","terrain":"shrine"},
+    "grey_road": {"danger":3,"restSafety":"low","forageValue":1,"factionOwner":"iron","terrain":"road"},
+    "muster_field": {"danger":3,"restSafety":"low","forageValue":2,"factionOwner":"free","terrain":"camp"},
+    "quartermaster_tent": {"danger":4,"restSafety":"none","forageValue":0,"factionOwner":"iron","terrain":"fort","settlementId":"greyhook_fortress"},
+    "greyhook_gate": {"danger":4,"restSafety":"none","forageValue":0,"factionOwner":"iron","terrain":"fort","settlementId":"greyhook_fortress"},
+    "greyhook_outer_yard": {"danger":4,"restSafety":"none","forageValue":0,"factionOwner":"iron","terrain":"fort","settlementId":"greyhook_fortress"},
+    "fortress_infirmary": {"danger":3,"restSafety":"low","forageValue":0,"factionOwner":"synod","terrain":"fort","settlementId":"greyhook_fortress"},
+    "lower_cells": {"danger":5,"restSafety":"none","forageValue":0,"factionOwner":"iron","terrain":"fort","settlementId":"greyhook_fortress"},
+    "sealed_prisoner_cell": {"danger":5,"restSafety":"none","forageValue":0,"factionOwner":"iron","terrain":"fort","settlementId":"greyhook_fortress"},
+    "synod_archive": {"danger":3,"restSafety":"medium","forageValue":0,"factionOwner":"synod","terrain":"archive","settlementId":"synod_archive"}
+  },
+  "roadEvents": [
+    {
+      "id": "iron_patrol",
+      "title": "Iron Lantern Patrol",
+      "text": "The dull gleam of lantern-iron catches the mud. Three soldiers are checking papers.",
+      "triggerTags": ["road","iron"],
+      "choices": [
+        {"label":"Show papers if you have them","consequence":{"heat":-1,"clue":"Iron patrol passed without incident."}},
+        {"label":"Hide and wait","cost":{"wits":5},"consequence":{"heat":1,"clue":"Waited out a patrol."},"failConsequence":{"heat":2,"clue":"Failed to hide from an Iron patrol."}},
+        {"label":"Talk your way past","cost":{"presence":6},"consequence":{"heat":-1,"fac":{"iron":2},"xp":1,"clue":"Talked past an Iron patrol."},"failConsequence":{"heat":2,"fac":{"iron":-3},"clue":"Botched a patrol conversation."}}
+      ]
+    },
+    {
+      "id": "lost_refugee",
+      "title": "Lost Refugee Witness",
+      "text": "A woman with two children stares at the ditch. She saw something that frightened her more than the road.",
+      "triggerTags": ["ditch","wilderness"],
+      "choices": [
+        {"label":"Offer food and listen","cost":{"food":1},"consequence":{"morale":1,"clue":"A refugee witness speaks.","lead":"refugee_witness"}},
+        {"label":"Send them toward Gallowsford","consequence":{"fac":{"hearth":2},"clue":"Directed refugees toward safety."}},
+        {"label":"Pass quietly","consequence":{"morale":-1,"wounds":0,"clue":"You walked past someone who needed help."}}
+      ]
+    },
+    {
+      "id": "rain_ditch",
+      "title": "Rain-Swollen Ditch",
+      "text": "The road has drowned. The ditch is waist-deep and the bank is crumbling.",
+      "triggerTags": ["road","wilderness"],
+      "choices": [
+        {"label":"Wade through","cost":{"body":5},"consequence":{"fatigue":2,"clue":"Forded the swollen ditch."},"failConsequence":{"wounds":1,"fatigue":3,"clue":"The ditch nearly dragged you under."}},
+        {"label":"Find a drier crossing","cost":{"wits":5},"consequence":{"fatigue":1,"food":-1,"clue":"Found a fordable crossing."},"failConsequence":{"fatigue":3,"clue":"Wasted time searching for a crossing."}}
+      ]
+    },
+    {
+      "id": "dead_letter_shrine",
+      "title": "Dead-Letter Shrine",
+      "text": "A small roadside shrine is stuffed with unopened letters. Someone wrote them and then someone else brought them here instead of delivering them.",
+      "triggerTags": ["shrine","synod"],
+      "choices": [
+        {"label":"Read one letter","cost":{"presence":5},"consequence":{"clue":"A dead letter names a prison cell number.","lead":"synod_rites","item":"ritual_notation_scrap"},"failConsequence":{"morale":-1,"clue":"The letter's guilt stains you."}},
+        {"label":"Leave an offering","cost":{"coin":2},"consequence":{"fac":{"synod":2,"hearth":2},"clue":"Left coin at a dead-letter shrine."}},
+        {"label":"Burn the letters for warmth","consequence":{"heat":-1,"fac":{"synod":-3},"clue":"Burned dead letters for heat."}}
+      ]
+    },
+    {
+      "id": "red_toll",
+      "title": "Red Ledger Toll Collector",
+      "text": "A thin man with a red-bound book blocks the road. 'Toll is paid in coin or favor,' he says.",
+      "triggerTags": ["road","red"],
+      "choices": [
+        {"label":"Pay the coin","cost":{"coin":3},"consequence":{"fac":{"red":2},"clue":"Paid a Red Ledger road toll."}},
+        {"label":"Offer a favor instead","cost":{"guile":6},"consequence":{"fac":{"red":4},"clue":"Promised a Red Ledger favor."},"failConsequence":{"fac":{"red":5},"crime":"Red Ledger favor in default","clue":"The Red Ledger marks you for default."}},
+        {"label":"Refuse and push through","cost":{"body":6},"consequence":{"fac":{"red":-5},"heat":1,"clue":"Refused a Red Ledger toll."},"failConsequence":{"wounds":1,"fac":{"red":-5},"clue":"The toll collector set dogs on you."}}
+      ]
+    },
+    {
+      "id": "free_spear_checkpoint",
+      "title": "Free Spear Checkpoint",
+      "text": "Men in patched cloaks stop you. 'We need coin. This road isn't safe and we made it safer.'",
+      "triggerTags": ["muster_field","free"],
+      "choices": [
+        {"label":"Pay willingly","cost":{"coin":2},"consequence":{"fac":{"free":3},"clue":"Contributed to the Free Spears."}},
+        {"label":"Offer to trade supplies","cost":{"food":2},"consequence":{"fac":{"free":4},"clue":"Traded food to the Free Spears."}},
+        {"label":"Demand passage as a friend","cost":{"presence":5},"consequence":{"fac":{"free":1},"clue":"Claimed Free Spear friendship."},"failConsequence":{"fac":{"free":-2},"clue":"Insulted the Free Spears."}}
+      ]
+    },
+    {
+      "id": "ash_sign",
+      "title": "Cinder Veil Ash Sign",
+      "text": "Ash is smeared on the road in a pattern that looks like a name. Some of the ash is still warm.",
+      "triggerTags": ["road","occult"],
+      "choices": [
+        {"label":"Trace the name","cost":{"resolve":5},"consequence":{"clue":"An ash sign spells a dead name.","fac":{"veil":3}},"failConsequence":{"resolvePenalty":1,"clue":"The ash sign frightened your mind."}},
+        {"label":"Scatter the ash","consequence":{"fac":{"veil":-3,"hearth":2},"clue":"Scattered an ash sign."}},
+        {"label":"Avoid it and move on","consequence":{"clue":"Left an ash sign undisturbed."}}
+      ]
+    },
+    {
+      "id": "wounded_drover",
+      "title": "Wounded Drover",
+      "text": "A man with a crushed hand sits beside an overturned cart. Three dead sheep lie in the ditch.",
+      "triggerTags": ["road","wilderness"],
+      "choices": [
+        {"label":"Bandage him and share food","cost":{"medicine":1,"food":1},"consequence":{"morale":1,"fac":{"hearth":2},"clue":"A wounded drover gives a name.","lead":"rookery_drain"}},
+        {"label":"Search the cart while he rests","consequence":{"item":"forged_papers","clue":"Took forged papers from a drover's cart.","crime":"stole from wounded drover","fac":{"hearth":-3}}},
+        {"label":"Leave him","consequence":{"morale":-1,"clue":"Left a wounded drover on the road."}}
+      ]
+    },
+    {
+      "id": "rookery_runner",
+      "title": "Rookery Runner",
+      "text": "A runner in dark broadcloth slides a message into your hand and disappears.",
+      "triggerTags": ["road","rook"],
+      "choices": [
+        {"label":"Read the message","consequence":{"clue":"A Rookery message offers a door.","lead":"rookery_drain","fac":{"rook":3}}},
+        {"label":"Burn it unread","consequence":{"fac":{"rook":-2},"clue":"Burned a Rookery message unread."}},
+        {"label":"Keep it for later","consequence":{"item":"rookery_sealed_message","clue":"Kept a sealed Rookery message."}}
+      ]
+    },
+    {
+      "id": "hungry_camp",
+      "title": "Hungry Camp Night",
+      "text": "The fire is tiny. No one is full. You hear something moving in the dark beyond the light.",
+      "triggerTags": ["wilderness","camp"],
+      "choices": [
+        {"label":"Tighten the watch and wait","cost":{"resolve":4},"consequence":{"fatigue":1,"morale":1,"clue":"Kept watch through a hungry night."},"failConsequence":{"fatigue":3,"clue":"Nobody slept well."}},
+        {"label":"Try to hunt or forage","cost":{"wits":5},"consequence":{"food":2,"clue":"Found food in the dark."},"failConsequence":{"food":0,"wounds":1,"clue":"The hunt went badly."}}
+      ]
+    },
+    {
+      "id": "grave_bell",
+      "title": "Grave-Bell on the Road",
+      "text": "A bell rings from somewhere ahead — the kind they bury with the restless dead. It takes you a moment to realize it's not ringing for you.",
+      "triggerTags": ["road","occult","shrine"],
+      "choices": [
+        {"label":"Approach the grave","cost":{"resolve":4},"consequence":{"clue":"A grave-bell marks a Crown-of-Ash dead-name burial.","fac":{"veil":2}},"failConsequence":{"morale":-1,"clue":"The grave-bell unnerved the party."}},
+        {"label":"Bypass and bless from a distance","consequence":{"fac":{"hearth":2,"synod":2},"clue":"Blessed a wayside grave from safety."}},
+        {"label":"Turn back and find another path","consequence":{"fatigue":2,"clue":"Rerouted around a grave-bell."}}
+      ]
+    }
+  ]
+}
