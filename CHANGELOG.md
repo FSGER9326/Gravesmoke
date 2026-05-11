@@ -1,5 +1,36 @@
 # Changelog
 
+## v0.8.0-dev1 — Greyhook Complete Flow Pass
+
+- Added `data/greyhook_v08.json` as a structured vertical-slice data file.
+- Added Greyhook chapter metadata, approaches, scenes, prisoner choices, companion reactions, enemy interference, and acceptance criteria.
+- Updated `src/main.js` to load v0.8 Greyhook data alongside base game data.
+- Added a development Greyhook jump state for faster testing.
+- Implemented centralized helper logic for flags, clues, items, solutions, faction deltas, alert bands, alert text, and alert increases.
+- Implemented Greyhook route families:
+  - supply escort
+  - quartermaster blackmail
+  - infirmary route
+  - forged transfer
+  - captured-inside route
+  - escape route
+- Implemented Greyhook scenes:
+  - gate search pattern
+  - yard patrols
+  - quartermaster lockbox
+  - infirmary records
+  - lower-cell access
+  - archive hook
+- Implemented sealed-prisoner choices:
+  - question
+  - extract
+  - silence
+  - trade
+- Added prisoner-choice faction consequences, morale changes, item rewards, crimes, next hooks, and companion reactions.
+- Added Greyhook aftermath resolution and Synod Archive hook.
+- Expanded validator to check the v0.8 Greyhook data file.
+- Updated Android wrapper versionCode/versionName to `80` / `0.8.0-dev1`.
+
 ## v0.7.8 — Greyhook Alert Consequence Slice
 
 - Added Greyhook alert ladder: routine, tightened searches, lockdown, forced escape/capture.
