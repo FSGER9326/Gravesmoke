@@ -13,9 +13,11 @@ Auto-persisted development facts. Agent reads this on session start and appends 
 - All 7 validators pass: data, runtime, greyhook, playthrough, progression, travel, settlements.
 - `npm run validate` runs all 7 in sequence.
 - `npm run start` serves locally at http://127.0.0.1:8080.
-- Android wrapper at versionCode 81 / versionName 0.8.1-dev1 (not yet verified on device).
+- Android wrapper at versionCode 81 / versionName 0.8.2-dev1 (not yet verified on device).
 - GitHub remote: FSGER9326/Gravesmoke. Active branch: codex/v082-rpg-foundation.
 - Greyhook vertical slice stable: 6 route families, 4 prisoner choices, alert ladder, companion reactions, Synod Archive hook.
 - Main.js is ~340 lines single-file ES module. No frameworks.
 - The game uses `app` and `nav` DOM elements from `index.html`. All rendering goes through `app.innerHTML`.
 - `blank()` initializes saveVersion 2 with all RPG foundation fields.
+- .opencode/ configured: oh-my-openagent v4.0, 3 gravesmoke skills, local memory plugin.
+- Perks now show learned + available; camp shows fatigue/wounds; road event rate boosted.
