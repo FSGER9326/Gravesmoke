@@ -6,7 +6,9 @@
   "scripts": {
     "start": "python3 -m http.server 8080",
     "serve": "bash scripts/serve-web.sh",
-    "validate": "node tools/validate-game-data.js",
+    "validate": "node tools/validate-game-data.js && node tools/validate-runtime.js",
+    "validate:data": "node tools/validate-game-data.js",
+    "validate:runtime": "node tools/validate-runtime.js",
     "android:debug": "bash scripts/build-android-debug.sh"
   },
   "devDependencies": {}
