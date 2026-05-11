@@ -1,0 +1,16 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.gravesmoke.road'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.gravesmoke.road'
+        minSdk 23
+        targetSdk 35
+        versionCode 78
+        versionName '0.7.8'
+    }
+}
