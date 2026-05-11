@@ -1,7 +1,27 @@
 # Changelog
 
+## v0.8.1-dev1 — Android Runtime Stabilization + Greyhook Playthrough Hardening
+
+- Added visible runtime error diagnostics: `showRuntimeError`, `escapeHtml`, error/unhandledrejection listeners, and try/catch boot+render wrappers. Broken or missing runtime paths display a diagnostic card with Reload and Reset Save actions instead of a blank screen.
+- Added in-game Camp Debug State panel with version, storage key, screen, node, party, resources, Greyhook interior status, prisoner fate, aftermath, counts, route history, a Copy Debug State button, and collapsible raw state.
+- Added `tools/validate-greyhook-playthrough.js` for deterministic Greyhook path validation: natural start reachability, route solution families, approach-to-climax reachability, prisoner aftermath paths, Synod Archive hook, and save key coverage.
+- Wired playthrough validator into `npm run validate` and as `npm run validate:playthrough`.
+- Hardened save import/export/reset: import handles empty/malformed input, hydrates through existing hydrate() before assignment, does not overwrite current save on failure; export includes `saveVersion`; reset clears localStorage and returns to title.
+- Updated `docs/ANDROID_BUILD_PIPELINE.md` with APK verification checklist (14 steps) and blank-screen troubleshooting checklist (11 items).
+- Updated Android CI workflow to trigger on `assets/**` changes and pull requests to main.
+- Bumped Android wrapper versionCode to `81` / versionName to `0.8.1-dev1`.
+- Bumped version to `0.8.1-dev1`.
+
 ## v0.8.0-dev1 — Greyhook Complete Flow Pass
 
+- Added a first UI and graphic asset pass for the main play screen.
+- Added generated scene panels for Gallowsford Gate, Old Watchtower, Greyhook Gate, Fortress Infirmary, Greyhook Lower Cells, and Synod Archive.
+- Added generated companion portraits for all eight current companions.
+- Added a generated UI sprite sheet and cropped item, faction, navigation, and action icons.
+- Added `data/ui_assets.json` as the runtime manifest for node art, portraits, item icons, faction marks, nav icons, and action icons.
+- Updated the main UI with scene art, portrait cards, item icon cards, faction rows, a stronger HUD, grouped node actions, and icon-led bottom navigation.
+- Updated Android WebView asset sync to bundle `assets/**`.
+- Extended runtime validation to verify UI manifest paths and Android asset copying.
 - Added `data/greyhook_v08.json` as a structured vertical-slice data file.
 - Added Greyhook chapter metadata, approaches, scenes, prisoner choices, companion reactions, enemy interference, and acceptance criteria.
 - Updated `src/main.js` to load v0.8 Greyhook data alongside base game data.

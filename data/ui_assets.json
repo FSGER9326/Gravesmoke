@@ -1,0 +1,75 @@
+{
+  "version": "0.8.0-dev1",
+  "nav": {
+    "map": {"src":"assets/ui/icons/map.png","alt":"Map"},
+    "board": {"src":"assets/ui/icons/board.png","alt":"Case Board"},
+    "company": {"src":"assets/ui/icons/company.png","alt":"Company"},
+    "pack": {"src":"assets/ui/icons/pack.png","alt":"Pack"},
+    "camp": {"src":"assets/ui/icons/camp.png","alt":"Camp"}
+  },
+  "actions": {
+    "travel": {"src":"assets/ui/icons/travel.png","alt":"Travel"},
+    "investigate": {"src":"assets/ui/icons/investigate.png","alt":"Investigate"},
+    "speak": {"src":"assets/ui/icons/speak.png","alt":"Speak"},
+    "resolve": {"src":"assets/ui/icons/resolve.png","alt":"Resolve"},
+    "danger": {"src":"assets/ui/icons/danger.png","alt":"Danger"},
+    "camp": {"src":"assets/ui/icons/camp.png","alt":"Camp"},
+    "action": {"src":"assets/ui/icons/action.png","alt":"Action"},
+    "warning": {"src":"assets/ui/icons/warning.png","alt":"Warning"},
+    "good": {"src":"assets/ui/icons/action.png","alt":"Action"}
+  },
+  "factions": {
+    "iron": {"src":"assets/ui/icons/iron.png","alt":"Iron Guild"},
+    "rook": {"src":"assets/ui/icons/rook.png","alt":"Rook Company"},
+    "synod": {"src":"assets/ui/icons/synod.png","alt":"Synod"},
+    "hearth": {"src":"assets/ui/icons/hearth.png","alt":"Hearth"},
+    "veil": {"src":"assets/ui/icons/veil.png","alt":"Cinder Veil"},
+    "free": {"src":"assets/ui/icons/free.png","alt":"Free Spears"},
+    "red": {"src":"assets/ui/icons/red.png","alt":"Red Ledger"}
+  },
+  "itemTypes": {
+    "paper": {"src":"assets/ui/icons/paper.png","alt":"Paper"},
+    "key": {"src":"assets/ui/icons/key.png","alt":"Key"},
+    "blackmail": {"src":"assets/ui/icons/blackmail.png","alt":"Blackmail"},
+    "clue": {"src":"assets/ui/icons/clue.png","alt":"Clue"},
+    "lead": {"src":"assets/ui/icons/lead.png","alt":"Lead"},
+    "company": {"src":"assets/ui/icons/company.png","alt":"Company"},
+    "weapon": {"src":"assets/ui/icons/action.png","alt":"Weapon"},
+    "armor": {"src":"assets/ui/icons/action.png","alt":"Armor"},
+    "tool": {"src":"assets/ui/icons/key.png","alt":"Tool"},
+    "document": {"src":"assets/ui/icons/paper.png","alt":"Document"},
+    "quest": {"src":"assets/ui/icons/clue.png","alt":"Quest Item"},
+    "consumable": {"src":"assets/ui/icons/heal.png","alt":"Consumable"},
+    "unknown": {"src":"assets/ui/icons/action.png","alt":"Unknown"}
+  },
+  "itemTags": {
+    "martial": {"src":"assets/ui/icons/action.png","alt":"Martial"},
+    "criminal": {"src":"assets/ui/icons/red.png","alt":"Criminal"},
+    "healer": {"src":"assets/ui/icons/heal.png","alt":"Healer"},
+    "scout": {"src":"assets/ui/icons/travel.png","alt":"Scout"},
+    "faith": {"src":"assets/ui/icons/synod.png","alt":"Faith"},
+    "sly": {"src":"assets/ui/icons/stealth.png","alt":"Sly"},
+    "honorable": {"src":"assets/ui/icons/iron.png","alt":"Honorable"},
+    "mercy": {"src":"assets/ui/icons/mercy.png","alt":"Mercy"}
+  },
+  "companions": {
+    "mara": {"src":"assets/art/portraits/mara-voss.jpg","alt":"Mara Voss"},
+    "nell": {"src":"assets/art/portraits/nell-quickhands.jpg","alt":"Nell Quickhands"},
+    "ilyra": {"src":"assets/art/portraits/sister-ilyra.jpg","alt":"Sister Ilyra"},
+    "cael": {"src":"assets/art/portraits/brother-cael.jpg","alt":"Brother Cael"},
+    "brig": {"src":"assets/art/portraits/brig-sallow.jpg","alt":"Brig Sallow"},
+    "miren": {"src":"assets/art/portraits/miren-ash-eyed.jpg","alt":"Miren Ash-Eyed"},
+    "hadrik": {"src":"assets/art/portraits/hadrik-one-ear.jpg","alt":"Hadrik One-Ear"},
+    "sarn": {"src":"assets/art/portraits/old-sarn.jpg","alt":"Old Sarn"}
+  },
+  "nodes": {
+    "gate": {"src":"assets/art/scenes/gallowsford-gate.jpg","alt":"Gallowsford Gate"},
+    "greyhook_gate": {"src":"assets/art/scenes/greyhook-gate.jpg","alt":"Greyhook Fortress Gate"},
+    "greyhook_outer_yard": {"src":"assets/art/scenes/greyhook-gate.jpg","alt":"Greyhook Outer Yard"},
+    "fortress_infirmary": {"src":"assets/art/scenes/fortress-infirmary.jpg","alt":"Fortress Infirmary"},
+    "lower_cells": {"src":"assets/art/scenes/greyhook-lower-cells.jpg","alt":"Greyhook Lower Cells"},
+    "sealed_prisoner_cell": {"src":"assets/art/scenes/greyhook-lower-cells.jpg","alt":"Sealed Prisoner Cell"},
+    "synod_archive": {"src":"assets/art/scenes/synod-archive.jpg","alt":"Synod Archive"},
+    "tower": {"src":"assets/art/scenes/old-watchtower.jpg","alt":"Old Watchtower"}
+  }
+}

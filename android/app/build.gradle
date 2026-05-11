@@ -10,8 +10,8 @@ android {
         applicationId 'com.gravesmoke.road'
         minSdk 23
         targetSdk 35
-        versionCode 80
-        versionName '0.8.0-dev1'
+        versionCode 81
+        versionName '0.8.1-dev1'
     }
 }
 
@@ -25,6 +25,7 @@ tasks.register('syncWebPrototype', Copy) {
         include 'index.html'
         include 'src/**'
         include 'data/**'
+        include 'assets/**'
     }
     into layout.projectDirectory.dir('src/main/assets')
 }

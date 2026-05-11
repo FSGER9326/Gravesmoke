@@ -9,6 +9,18 @@ on:
       - 'index.html'
       - 'src/**'
       - 'data/**'
+      - 'assets/**'
+      - 'tools/**'
+      - 'package.json'
+      - '.github/workflows/android-debug.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'android/**'
+      - 'index.html'
+      - 'src/**'
+      - 'data/**'
+      - 'assets/**'
       - 'tools/**'
       - 'package.json'
       - '.github/workflows/android-debug.yml'

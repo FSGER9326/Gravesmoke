@@ -4,7 +4,7 @@ Updated: 2026-05-11
 
 ## Current prototype
 
-**v0.8.0-dev1 — Greyhook Complete Flow Pass**
+**v0.8.1-dev1 — Android Runtime Stabilization + Greyhook Playthrough Hardening**
 
 This is a playable HTML prototype moving toward the first stable Android-debug vertical slice. It is not yet a polished or verified Android APK.
 
@@ -43,9 +43,9 @@ starting enemy / companion draft
 
 ## Current milestone
 
-The project is implementing **v0.8 — Greyhook Fortress vertical slice**.
+The project is implementing **v0.8.1 — Android Runtime Stabilization + Greyhook Playthrough Hardening**.
 
-v0.8.0-dev1 currently includes:
+v0.8.1-dev1 currently includes:
 
 - `data/greyhook_v08.json` structured chapter data
 - Greyhook route families: supply escort, quartermaster blackmail, infirmary route, forged transfer, captured-inside route, escape route
@@ -58,26 +58,32 @@ v0.8.0-dev1 currently includes:
 - expanded Case Board sections in progress
 - current-objective guidance across the main screens
 - direct route travel from Case Board and objective buttons
+- generated first-batch scene panels and companion portraits under `assets/art/**`
+- generated and cropped UI icon sprite assets under `assets/ui/**`
+- manifest-backed UI art helpers in `data/ui_assets.json` and `src/main.js`
+- illustrated main play UI with scene art, portrait cards, item icons, faction marks, grouped actions, and icon-led bottom navigation
 - scrollable centered map layout for manual testing
 - camp save export/import/reset tools
 - validation for Greyhook data references
 - Greyhook topology validation for route reachability, lower-cell access, escape providers, prisoner choices, companion reactions, and acceptance criteria
-- Android WebView wrapper scaffold at versionCode 80 / versionName 0.8.0-dev1
+- Android WebView wrapper scaffold at versionCode 81 / versionName 0.8.1-dev1
 
 ## Current validation commands
 
 ```bash
 npm run validate
+npm run validate:playthrough
 npm run validate:greyhook
 npm run android:debug
 ```
 
-`npm run validate` now runs data validation, runtime wiring validation, and Greyhook flow topology validation.
+`npm run validate` now runs data validation, runtime wiring validation, Greyhook flow topology validation, and Greyhook playthrough path validation.
 
 ## Known risks / next checks
 
 - The web flow now has a browser-smoked path from party start through Greyhook prisoner resolution and Synod Archive hook; more prisoner-fate variants still need manual passes.
+- The runtime error panel catches boot failures, unhandled exceptions, and render errors, making Android blank screens diagnosable.
+- The Camp Debug State panel provides in-game state inspection for QA and Android bug reports.
+- Android WebView loading must be verified on device through the generated debug APK (see `docs/ANDROID_BUILD_PIPELINE.md` for verification checklist).
 - `src/main.js` still contains some hardcoded Greyhook flow logic and should be the next runtime stabilization target.
-- Android WebView loading must be verified on device through the generated debug APK.
-- Android debug workflow should be run only after `npm run validate` passes.
 - Visual polish, combat expansion, release signing, and new chapters should wait until the Greyhook web flow is stable.
