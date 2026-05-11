@@ -126,9 +126,15 @@ if (greyhook) {
     if (!greyhook.companionReactions[choice]) throw new Error(`Missing companion reaction set for prisoner choice: ${choice}`);
   }
 
+  const recursiveEnemyTriggers = new Set(['lockdown']);
   for (const [id, enemy] of Object.entries(greyhook.enemyInterference || {})) {
     if (!enemy.name || !enemy.effect || !Array.isArray(enemy.triggers) || enemy.triggers.length === 0) {
       throw new Error(`Enemy interference ${id} missing name/effect/triggers`);
+    }
+    for (const trigger of enemy.triggers) {
+      if (recursiveEnemyTriggers.has(trigger)) {
+        throw new Error(`Enemy interference ${id} uses recursive trigger: ${trigger}`);
+      }
     }
   }
 
