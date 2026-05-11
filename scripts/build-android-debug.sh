@@ -3,8 +3,8 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-echo "Validating game data..."
-node tools/validate-game-data.js
+echo "Running full validation..."
+npm run validate
 
 echo "Building Android debug APK..."
 gradle -p android assembleDebug
