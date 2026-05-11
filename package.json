@@ -1,6 +1,6 @@
 {
   "name": "gravesmoke-road",
-  "version": "0.7.8",
+  "version": "0.8.0-dev1",
   "private": true,
   "description": "Android-first dark fantasy RPG prototype.",
   "scripts": {
