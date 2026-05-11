@@ -4,9 +4,9 @@ Updated: 2026-05-11
 
 ## Current prototype
 
-**v0.8.1-dev1 — Android Runtime Stabilization + Greyhook Playthrough Hardening**
+**v0.8.2-dev1 — RPG Foundation Pass**
 
-This is a playable HTML prototype moving toward the first stable Android-debug vertical slice. It is not yet a polished or verified Android APK.
+This is a playable HTML prototype with character origins, XP/progression, road travel pressure, settlement hubs, companion depth, and item systems built on the stable Greyhook vertical slice. It is not yet a polished or verified Android APK.
 
 ## Game identity
 
@@ -43,9 +43,25 @@ starting enemy / companion draft
 
 ## Current milestone
 
-The project is implementing **v0.8.1 — Android Runtime Stabilization + Greyhook Playthrough Hardening**.
+The project is implementing **v0.8.2 — RPG Foundation**.
 
-v0.8.1-dev1 currently includes:
+v0.8.2-dev1 currently includes:
+
+- persistent player character identity: name, origin, background title, stats
+- 8 origins with stat mods, starting items, faction deltas, enemy bindings, check bonuses, and drawbacks
+- origin picker screen with name entry/randomize
+- XP, level progression (1-5), unspent perk points
+- 10 starter perks with implemented mechanical effects (travel, paper, social, mercy, healing, scout, blackmail, occult, supply, leadership)
+- Company character sheet screen: character card with XP bar, stats, wounds, fatigue; available perk list
+- Vagrus-style road travel: node metadata (danger, rest safety, faction owner, terrain), travel fatigue, hostile terrain heat, exhaustion warnings
+- 11 road events with stat checks, choice/consequence flow, failed-forward outcomes
+- settlement/hub play: Gallowsford, Greyhook Fortress, Synod Archive with districts and services
+- companion loyalty/stress tracking updated by prisoner fate choices
+- companion state displayed on Company companion cards
+- fatigue recovery during rest, Camp Surgeon perk effect
+- data-driven origin items and new item categories (token, occult, debt, contraband)
+- `data/origins.json`, `data/progression.json`, `data/travel.json`, `data/settlements.json`
+- validators: `validate:progression`, `validate:travel`, `validate:settlements`
 
 - `data/greyhook_v08.json` structured chapter data
 - Greyhook route families: supply escort, quartermaster blackmail, infirmary route, forged transfer, captured-inside route, escape route

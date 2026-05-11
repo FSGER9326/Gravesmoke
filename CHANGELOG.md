@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.8.2-dev1 — RPG Foundation Pass
+
+- Added persistent player character identity with 8 origins: Ash-Writ Deserter, Ledger-Thief, Synod Scribe, Free Spear Bastard, Rookery Door-Man, Red Ledger Debtor, Cinder Veil Touched, Hearthbound Corpse-Kin.
+- Added character creation flow: origin picker (with name entry/randomize) before companion selection.
+- Added XP, level progression (1-5, 6 thresholds), and unspent perk points.
+- Added 10 starter perks with implemented mechanical effects (Hard Road Feet, False Seal Hand, Cold Reader, Mercy With Teeth, Camp Surgeon, Door Sense, Red Debt Smile, Ash-Nerve, Quartermaster Eye, Campfire Authority).
+- Added Company character sheet showing name, origin, level, XP bar, stats, wounds, fatigue, and available perks.
+- Added Vagrus-style road travel pressure: node metadata (danger, rest safety, faction owner, terrain), travel fatigue, hostile territory heat, and dangerous-road exhaustion warnings.
+- Added 11 road events (Iron Patrol, Lost Refugee, Rain Ditch, Dead-Letter Shrine, Red Toll, Free Spear Checkpoint, Ash Sign, Wounded Drover, Rookery Runner, Hungry Camp, Grave-Bell) with stat checks, consequences, and failed-forward outcomes.
+- Added settlement/hub play: Gallowsford, Greyhook Fortress, and Synod Archive with districts, services (buy food, rest, rumors, papers, faction contacts, healing, archive access), and faction/legal pressure display.
+- Added companion loyalty/stress tracking with companion-state updates based on prisoner fate choices.
+- Added fatigue recovery to rest and Camp Surgeon perk effect.
+- Added data-driven item origin tokens (deserter writ, stolen ledger scrap, etc.) and new item types (token, occult, debt, contraband).
+- Added `data/origins.json`, `data/progression.json`, `data/travel.json`, `data/settlements.json`.
+- Added validators: `validate:progression`, `validate:travel`, `validate:settlements`, all wired into `npm run validate`.
+- Bumped save version to 2, version to `0.8.2-dev1`.
+
 ## v0.8.1-dev1 — Android Runtime Stabilization + Greyhook Playthrough Hardening
 
 - Added visible runtime error diagnostics: `showRuntimeError`, `escapeHtml`, error/unhandledrejection listeners, and try/catch boot+render wrappers. Broken or missing runtime paths display a diagnostic card with Reload and Reset Save actions instead of a blank screen.

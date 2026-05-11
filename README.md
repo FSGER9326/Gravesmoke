@@ -2,7 +2,7 @@
 
 Android-first dark fantasy RPG project.
 
-Current prototype: **v0.8.1-dev1 — Android Runtime Stabilization + Greyhook Playthrough Hardening**.
+Current prototype: **v0.8.2-dev1 — RPG Foundation Pass**.
 
 ## Current design
 
@@ -48,6 +48,17 @@ A debug APK workflow exists at:
 
 The Android wrapper is scaffolded, but gameplay stability and data validation remain the priority before treating APK output as install-ready.
 
+## v0.8.2-dev1 focus
+
+- 8 character origins with stats, items, factions, and starting enemy pressure
+- XP, level progression, and 10 learnable perks
+- road travel pressure: fatigue, node danger, hostile terrain heat
+- 11 road events with choices, checks, and consequences
+- settlement/hub play: Gallowsford, Greyhook Fortress, Synod Archive
+- companion loyalty/stress tracking by prisoner fate
+- character sheet and perk system on Company screen
+- all Greyhook v0.8.0/v0.8.1 systems preserved and stable
+
 ## v0.8.1-dev1 focus
 
 - runtime error diagnostics panel (visible on Android)
@@ -55,7 +66,6 @@ The Android wrapper is scaffolded, but gameplay stability and data validation re
 - deterministic Greyhook playthrough path validation
 - hardened save import/export/reset behavior
 - Android APK verification docs
-- continued Greyhook route families, alert ladder, prisoner choices, and companion reactions from v0.8.0
 
 ## v0.8.0-dev1 focus
 
@@ -98,12 +108,12 @@ For the local test server and GitHub sync workflow, see `docs/LOCAL_DEV_SYNC.md`
 
 ## Next milestone
 
-**v0.8.1 — Android Runtime Stabilization + Greyhook Playthrough Hardening**
+**v0.8.2 — RPG Foundation stabilization**
 
 Goals:
 
-- visibly diagnose blank-screen/Android runtime errors
-- provide in-game debug state for manual QA
-- validate Greyhook playthrough paths deterministically
-- harden save import/export/reset
-- verify Android debug APK workflow on device
+- playtest origin/XP/perk/travel/settlement loop end-to-end
+- verify Greyhook still resolves after RPG foundation changes
+- fix any stuck states found during playthrough
+- stabilize road event balance and settlement service costs
+- Android debug APK verification (pending environment)
