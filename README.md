@@ -8,9 +8,44 @@ Current prototype: **v0.7.8 — Greyhook Alert Consequence Slice**.
 
 Gravesmoke Road is a nonlinear mobile CRPG with gamebook-style presentation, node travel, light supplies, deep character creation, named factions, party management, papers/warrants, investigation-led quests, tactical card combat, and access-barrier main story chapters.
 
-## Current prototype status
+## Current repository status
 
-v0.7.8 is a playable HTML prototype. It is not yet a stable Android APK. The prototype is being used to mature the RPG systems before wrapping them in a reliable Android build pipeline.
+The repo now contains a proper modular prototype layout:
+
+```text
+/
+  index.html
+  src/main.js
+  src/styles.css
+  data/game_data.json
+  tools/validate-game-data.js
+  android/
+  docs/
+  .github/workflows/
+```
+
+The web prototype is playable from `index.html`. The Android wrapper scaffold exists under `/android` and loads the same local web prototype through a WebView.
+
+## Android status
+
+The Android project uses:
+
+```text
+package: com.gravesmoke.road
+versionCode: 78
+versionName: 0.7.8
+minSdk: 23
+targetSdk: 35
+compileSdk: 35
+```
+
+A debug APK workflow exists at:
+
+```text
+.github/workflows/android-debug.yml
+```
+
+The Android wrapper is now scaffolded, but still needs real CI verification before treating the APK as install-ready.
 
 ## v0.7.8 focus
 
@@ -38,6 +73,14 @@ character origin
 → companion reactions and chapter consequence
 ```
 
+## Local commands
+
+```bash
+npm run validate
+python3 -m http.server 8080
+./scripts/build-android-debug.sh
+```
+
 ## Next milestone
 
 **v0.8 — Greyhook Fortress vertical slice**
@@ -48,4 +91,4 @@ Goals:
 - make alert change exits, patrols, dialogue, and route availability throughout Greyhook
 - deepen companion reactions and loyalty/morale consequences
 - expand aftermath of prisoner choice across factions and starting enemy pressure
-- add first Android wrapper pass after the gameplay slice is stable
+- verify the Android debug APK workflow and fix build issues found by CI
