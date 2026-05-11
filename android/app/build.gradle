@@ -14,3 +14,15 @@ android {
         versionName '0.7.8'
     }
 }
+
+tasks.register('syncWebPrototype', Copy) {
+    def repoRoot = rootProject.projectDir.parentFile
+    from(repoRoot) {
+        include 'index.html'
+        include 'src/**'
+        include 'data/**'
+    }
+    into layout.projectDirectory.dir('src/main/assets')
+}
+
+preBuild.dependsOn syncWebPrototype
