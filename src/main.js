@@ -1,13 +1,25 @@
-const D=await fetch('./data/game_data.json').then(r=>r.json());
-const V=await fetch('./data/greyhook_v08.json').then(r=>r.json());
-const UI=await fetch('./data/ui_assets.json').then(r=>r.json());
-D.version=V.version;
 const K='gravesmoke.repo.v080dev1';
 const app=document.getElementById('app');
 const nav=document.getElementById('nav');
 
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+function showRuntimeError(error,context='runtime'){let msg=escapeHtml(error?.message||String(error));let stack=escapeHtml(error?.stack||'');let ctx=escapeHtml(context);app.innerHTML=`<div class="panel runtimeError"><h2>Runtime Error</h2><div class="mut">Context: ${ctx}</div><pre class="errorStack">${msg}\n\n${stack}</pre><button class="btn" onclick="location.reload()"><span>Reload</span></button><button class="btn bad" onclick="localStorage.clear();location.reload()"><span>Reset Save</span></button></div>`;nav.hidden=true} window.showRuntimeError=showRuntimeError;
+window.addEventListener('error',e=>{let err=e.error||e.message||'Unknown error';showRuntimeError(err,'unhandled')});
+window.addEventListener('unhandledrejection',e=>{showRuntimeError(e.reason,'unhandled rejection')});
+
+let D,V,UI;
+try {
+  D=await fetch('./data/game_data.json').then(r=>r.json());
+  V=await fetch('./data/greyhook_v08.json').then(r=>r.json());
+  UI=await fetch('./data/ui_assets.json').then(r=>r.json());
+  D.version=V.version;
+} catch(e) {
+  showRuntimeError(e,'boot');
+}
+
 const baseLeads={market_papers:'rumored',rookery_drain:'rumored',free_writ:'rumored',synod_rites:'rumored',refugee_witness:'rumored'};
 const blank=()=>({
+  saveVersion:1,
   screen:'title',node:'gate',log:[],party:[],pool:Object.keys(D.companions),
   stats:{body:5,wits:5,guile:5,presence:5,resolve:5},
   res:{coin:14,food:5,medicine:2,tools:2,heat:0,day:1},
@@ -55,7 +67,7 @@ function hasFlag(k){return !!S.flags[k]}
 function deltaFac(d={}){for(const k of Object.keys(d))S.fac[k]=(S.fac[k]||0)+d[k]}
 function addConsequence(t){if(t&&!S.consequenceLog.includes(t))S.consequenceLog.unshift(t)}
 function go(x){S.screen=x;render()} window.go=go;
-function reset(){S=blank();go('party')} window.reset=reset;
+function reset(){S=blank();localStorage.removeItem(K);go('title')} window.reset=reset;
 function continueGame(){let target=S.screen&&!['title','party'].includes(S.screen)?S.screen:'map';if(S.party.length<3&&!S.contract&&!S.greyhook)target='party';go(target)} window.continueGame=continueGame;
 function devGreyhook(){S=blank();S.party=['mara','nell','ilyra'];unlockGreyhook('Dev state: Greyhook vertical slice seeded.');S.node='greyhook_gate';['greyhook_supply_route','quartermaster_blackmail_route','infirmary_route','transfer_forgery_route','greyhook_escape'].forEach(addSol);['greyhook_supply_contract','quartermaster_blackmail','greyhook_infirmary_seal','prisoner_transfer_forgery','greyhook_escape_mark'].forEach(addItem);go('board')} window.devGreyhook=devGreyhook;
 
@@ -162,7 +174,7 @@ nodeScreen=function(){app.innerHTML=header()+`<div class="panel">${guidePanel()}
 nodeActions=function(){let s='';let ls=Object.entries(D.leads).filter(([k,l])=>l.node==S.node&&S.leads[k]=='rumored');if(ls.length)s+=ls.map(([k,l])=>btn('Investigate: '+l.name+' ('+checkScore(l)+'/'+Math.max(0,l.dc-1)+')',`investigate('${k}')`,'good')).join('');if(S.node=='tower'&&S.contract&&!S.ledger)s+=btn('Take the ledger by force or parley','ledgerWin()','pri');if(S.node=='greyhook_gate')s+=greyhookApproaches()+sceneButtonsForNode('greyhook_gate');if(S.node=='greyhook_outer_yard')s+=sceneButtonsForNode('greyhook_outer_yard')+btn('Ask companion for Greyhook angle','companionAngle()','good')+btn('Starting enemy interference','enemyInterferenceScene()','bad');if(['quartermaster_tent','fortress_infirmary','lower_cells','synod_archive'].includes(S.node))s+=sceneButtonsForNode(S.node);if(S.node=='sealed_prisoner_cell')s+=sceneButtonsForNode('sealed_prisoner_cell')+prisonerButtons();if(isGreyhookLockdown())s+=btn('Forced escape / capture pressure','escapeOrCapture()','bad');return s||btn('Gather rumor','rumor()')};
 company=function(){app.innerHTML=header()+`<div class="panel">${guidePanel()}<h2>Company</h2>${S.party.map(id=>{let c=comp(id);return card(`${c.name} â€” ${c.role}`,`${c.text}<br><b>${c.ability}:</b> ${c.effect}<br>${(c.tags||[]).map(x=>tag(x)).join('')}`)}).join('')}<h3>Morale</h3>${tag(S.morale||0,S.morale<0?'red':'green')}<h3>Companion Reactions</h3>${reactionCards()||'<p>No major reaction yet.</p>'}<h3>Crimes</h3>${S.crimes.map(c=>tag(c,'red')).join('')||'<p>No recorded crimes.</p>'}</div>`};
 pack=function(){app.innerHTML=header()+`<div class="panel">${guidePanel()}<h2>Pack & Papers</h2>${S.items.map(id=>{let i=item(id);return card(`${i.name} â€” ${i.type}`,`${i.text}<br>${(i.tags||[]).map(x=>tag(x)).join('')}`)}).join('')||'<p>No special items yet.</p>'}</div>`};
-camp=function(){app.innerHTML=header()+`<div class="panel">${guidePanel()}<h2>Camp</h2>${btn('Scout a rumor','rumor()')}${btn('Forage for food','forage()','good')}${btn('Plan Greyhook escape / reduce alert','campEscape()')}${btn('Debrief prisoner choice','campDebrief()')}${btn('Rest and eat','rest()')}<h3>Save</h3>${btn('Export save code','exportSave()','good')}${btn('Import save code','importSave()')}${btn('Reset run','confirmReset()','bad')}</div>`};
+camp=function(){app.innerHTML=header()+`<div class="panel">${guidePanel()}<h2>Camp</h2>${btn('Scout a rumor','rumor()')}${btn('Forage for food','forage()','good')}${btn('Plan Greyhook escape / reduce alert','campEscape()')}${btn('Debrief prisoner choice','campDebrief()')}${btn('Rest and eat','rest()')}<h3>Save</h3>${btn('Export save code','exportSave()','good')}${btn('Import save code','importSave()')}${btn('Reset run','confirmReset()','bad')}<h3>Debug</h3>${debugStatePanel()}</div>`};
 header=function(){return `<div class="head"><div><h1>Gravesmoke Road</h1><div class="mut">v${D.version} - Day ${S.res.day} - ${n(S.node).name}</div></div>${resourceRail()}</div>`};
 routeCards=function(chapter){return Object.entries(D.leads).filter(([,l])=>l.chapter==chapter).map(([k,l])=>{let state=S.leads[k]||'unknown',body=`${l.text}<br><b>Where:</b> ${n(l.node).name} - <b>Check:</b> ${l.stat.toUpperCase()} ${l.dc}<br>${leadCheckLine(l)}<br><b>Reward:</b> ${l.item?item(l.item).name:'none'}<br><b>State:</b> ${tag(state,state=='viable'?'green':state=='failed_forward'?'red':state=='rumored'?'gold':'')}${l.transformsTo?'<br><b>Failed-forward:</b> '+l.transformsTo.map(x=>D.leads[x]?.name||x).join(', '):''}`;return card(l.name,body,routeCardAction(k,l,state))}).join('')};
 title=function(){app.innerHTML=header()+`<div class="panel"><h2>v0.8.0-dev1 - Greyhook Complete Flow Pass</h2><p>The first full Greyhook flow pass: route families, alert ladder, interior scenes, prisoner fate, companion reactions, aftermath, and next chapter hook.</p>${btn('New Game','reset()','pri')}${btn(hasStoredSave()?'Continue':'Start from party draft','continueGame()','good')}${btn('Jump to Greyhook test state','devGreyhook()')}</div>`};
@@ -180,8 +192,38 @@ rest=function(){let ate=S.res.food>0;S.res.food=Math.max(0,S.res.food-1);S.res.d
 function encodeSave(data){let bytes=new TextEncoder().encode(JSON.stringify(data));let text='';bytes.forEach(b=>text+=String.fromCharCode(b));return btoa(text)}
 function decodeSave(code){let text=atob(code.trim());let bytes=Uint8Array.from(text,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))}
 function exportSave(){let payload=encodeSave(S),done=()=>{log('Save code exported.');render()};if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(payload).then(done).catch(()=>{prompt('Copy save code',payload);done()});else{prompt('Copy save code',payload);done()}} window.exportSave=exportSave;
-function importSave(){let payload=prompt('Paste save code');if(!payload)return;try{S=hydrate(decodeSave(payload));log('Save code imported.');render()}catch(e){alert('Save import failed.');log('Save import failed.');render()}} window.importSave=importSave;
+function importSave(){let payload=prompt('Paste save code');if(!payload||!payload.trim())return;try{let data=decodeSave(payload.trim());if(!data||typeof data!=='object')throw new Error('Invalid save data');let restored=hydrate(data);S=restored;log('Save code imported.');render()}catch(e){alert('Save import failed. Current save is unchanged.');log('Save import failed.');render()}} window.importSave=importSave;
 function confirmReset(){if(confirm('Reset this run and return to party selection?'))reset()} window.confirmReset=confirmReset;
+
+function debugStateText(){return [
+  `Gravesmoke Road v${D.version}`,
+  `Storage key: ${K}`,
+  `Screen: ${S.screen}  Node: ${S.node}`,
+  `Party: ${S.party.join(', ')||'none'}  Morale: ${S.morale}`,
+  `Food: ${S.res.food}  Heat: ${S.res.heat}  Day: ${S.res.day}  Coin: ${S.res.coin}`,
+  `Greyhook inside: ${S.greyhookInside?'yes':'no'}  Route: ${S.greyhookRoute||'none'}  Alert: ${S.greyhookAlert}/5`,
+  `Prisoner contact: ${S.prisonerContact?'yes':'no'}  Choice: ${S.prisonerChoice||'none'}  Outcome: ${S.prisonerOutcome||'none'}`,
+  `Aftermath: ${S.aftermath||'none'}  Flags: ${Object.keys(S.flags).length}  Items: ${S.items.length}  Solutions: ${S.solutions.length}`,
+  `Crimes: ${S.crimes.length}  Enemy type: ${S.enemyType}  Pressure: ${S.enemyPressure}`,
+  `Last routes: ${S.routeHistory.slice(-5).join(', ')||'none'}`
+].join('\n')}
+function copyDebugState(){let t=debugStateText();let done=()=>log('Debug state copied.');let fail=()=>{let el=document.querySelector('.debugDetails');if(el)el.open=true;log('Copy unavailable. Raw state visible below.')};if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(done).catch(fail);else fail();render()} window.copyDebugState=copyDebugState;
+function debugStatePanel(){let rows=[
+  ['Version',D.version],['Storage key',K],['Screen',S.screen,'node',n(S.node).name],
+  ['Party',S.party.join(', ')||'none','Morale',String(S.morale)],
+  ['Food',String(S.res.food),'Heat',`${S.res.heat}/6`],
+  ['Day',String(S.res.day),'Coin',String(S.res.coin)],
+  ['Medicine',String(S.res.medicine),'Tools',String(S.res.tools)],
+  ['Greyhook inside',S.greyhookInside?'yes':'no','Route',S.greyhookRoute||'none'],
+  ['Alert',`${S.greyhookAlert}/5 — ${greyhookAlertBand()}`,'Lockdown',isGreyhookLockdown()?'yes':'no'],
+  ['Prisoner contact',S.prisonerContact?'yes':'no','Choice',S.prisonerChoice||'none'],
+  ['Outcome',S.prisonerOutcome||'none','Aftermath',S.aftermath||'none'],
+  ['Flags',String(Object.keys(S.flags).length),'Items',String(S.items.length)],
+  ['Solutions',String(S.solutions.length),'Clues',String(S.clues.length)],
+  ['Crimes',String(S.crimes.length),'Reactions',String(S.reactions.length)],
+  ['Enemy type',S.enemyType,'Pressure',String(S.enemyPressure)],
+  ['Last routes',S.routeHistory.slice(-5).join(', ')||'none','']
+];let table=rows.map(r=>`<tr>${r.map(c=>c?`<td>${escapeHtml(String(c))}</td>`:'<td></td>').join('')}</tr>`).join('');return `<div class="card debugPanel"><div class="ct">Debug State</div><table class="debugTable">${table}</table><details class="debugDetails"><summary>Raw State</summary><pre class="errorStack">${escapeHtml(JSON.stringify(S,null,2))}</pre></details>${btn('Copy Debug State','copyDebugState()','good')}${S.greyhookInside||!S.greyhook?'':btn('Jump to Greyhook test state','devGreyhook()')}${btn('Reset Save','confirmReset()','bad')}</div>`}
 
 function actionGroup(title,html,cls=''){if(!html)return '';let key=cls.includes('danger')?'danger':cls.includes('travel')?'travel':cls.includes('scene')?'investigate':'resolve';return `<section class="actionGroup ${cls}"><div class="groupTitle">${assetImg(iconEntry(key),'groupIcon','')}<span>${title}</span></div><div class="actionGrid">${html}</div></section>`}
 function resourcePill(label,value,cls='',icon='action'){return `<span class="resourcePill ${cls}">${assetImg(iconEntry(icon),'pillIcon','')}<span>${label}</span><b>${value}</b></span>`}
@@ -205,6 +247,6 @@ nextStep=function(){let a=guideAction();return card('Next',recommendedNext(),btn
 title=function(){app.innerHTML=header()+`<div class="panel titlePanel">${scenePanel('gate')}<h2>v0.8.0-dev1 - Greyhook Complete Flow Pass</h2><p>The first full Greyhook flow pass: route families, alert ladder, interior scenes, prisoner fate, companion reactions, aftermath, and next chapter hook.</p>${btn('New Game','reset()','pri')}${btn(hasStoredSave()?'Continue':'Start from party draft','continueGame()','good')}${btn('Jump to Greyhook test state','devGreyhook()')}</div>`};
 
 const navLabels={map:'Map',board:'Board',company:'Company',pack:'Pack',camp:'Camp'};
-render=function(){save();nav.hidden=['title','party'].includes(S.screen);if(!nav.hidden)nav.innerHTML=`<div class="navInner">${Object.keys(navLabels).map(x=>`<button class="${S.screen==x?'active':''}" onclick="go('${x}')">${navIcon(x)}<span>${navLabels[x]}</span></button>`).join('')}</div>`;({title,map,board,company,pack,camp,party,node:nodeScreen}[S.screen]||map)()}; window.render=render;
+render=function(){save();nav.hidden=['title','party'].includes(S.screen);if(!nav.hidden)nav.innerHTML=`<div class="navInner">${Object.keys(navLabels).map(x=>`<button class="${S.screen==x?'active':''}" onclick="go('${x}')">${navIcon(x)}<span>${navLabels[x]}</span></button>`).join('')}</div>`;try{({title,map,board,company,pack,camp,party,node:nodeScreen}[S.screen]||map)()}catch(e){showRuntimeError(e,'render')}}; window.render=render;
 
-render();
+try { render(); } catch(e) { showRuntimeError(e,'render'); }

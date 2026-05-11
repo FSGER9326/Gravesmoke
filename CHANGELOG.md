@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.8.1-dev1 — Android Runtime Stabilization + Greyhook Playthrough Hardening
+
+- Added visible runtime error diagnostics: `showRuntimeError`, `escapeHtml`, error/unhandledrejection listeners, and try/catch boot+render wrappers. Broken or missing runtime paths display a diagnostic card with Reload and Reset Save actions instead of a blank screen.
+- Added in-game Camp Debug State panel with version, storage key, screen, node, party, resources, Greyhook interior status, prisoner fate, aftermath, counts, route history, a Copy Debug State button, and collapsible raw state.
+- Added `tools/validate-greyhook-playthrough.js` for deterministic Greyhook path validation: natural start reachability, route solution families, approach-to-climax reachability, prisoner aftermath paths, Synod Archive hook, and save key coverage.
+- Wired playthrough validator into `npm run validate` and as `npm run validate:playthrough`.
+- Hardened save import/export/reset: import handles empty/malformed input, hydrates through existing hydrate() before assignment, does not overwrite current save on failure; export includes `saveVersion`; reset clears localStorage and returns to title.
+- Updated `docs/ANDROID_BUILD_PIPELINE.md` with APK verification checklist (14 steps) and blank-screen troubleshooting checklist (11 items).
+- Updated Android CI workflow to trigger on `assets/**` changes.
+- Bumped version to `0.8.1-dev1`.
+
 ## v0.8.0-dev1 — Greyhook Complete Flow Pass
 
 - Added a first UI and graphic asset pass for the main play screen.

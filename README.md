@@ -2,7 +2,7 @@
 
 Android-first dark fantasy RPG project.
 
-Current prototype: **v0.8.0-dev1 — Greyhook Complete Flow Pass**.
+Current prototype: **v0.8.1-dev1 — Android Runtime Stabilization + Greyhook Playthrough Hardening**.
 
 ## Current design
 
@@ -48,6 +48,15 @@ A debug APK workflow exists at:
 
 The Android wrapper is scaffolded, but gameplay stability and data validation remain the priority before treating APK output as install-ready.
 
+## v0.8.1-dev1 focus
+
+- runtime error diagnostics panel (visible on Android)
+- in-game debug state panel for QA and bug reports
+- deterministic Greyhook playthrough path validation
+- hardened save import/export/reset behavior
+- Android APK verification docs
+- continued Greyhook route families, alert ladder, prisoner choices, and companion reactions from v0.8.0
+
 ## v0.8.0-dev1 focus
 
 - Greyhook Fortress complete-flow pass
@@ -89,11 +98,12 @@ For the local test server and GitHub sync workflow, see `docs/LOCAL_DEV_SYNC.md`
 
 ## Next milestone
 
-**v0.8 — Greyhook Fortress vertical slice stabilization**
+**v0.8.1 — Android Runtime Stabilization + Greyhook Playthrough Hardening**
 
 Goals:
 
-- manually play the web flow from new game to Greyhook aftermath
-- fix any stuck states found during playthrough
-- verify the Android debug APK workflow and fix build issues found by CI
-- install APK on device and confirm WebView asset loading plus localStorage persistence
+- visibly diagnose blank-screen/Android runtime errors
+- provide in-game debug state for manual QA
+- validate Greyhook playthrough paths deterministically
+- harden save import/export/reset
+- verify Android debug APK workflow on device

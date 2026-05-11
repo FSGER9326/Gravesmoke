@@ -45,6 +45,16 @@ requireIncludes(main, 'function board()', 'src/main.js');
 requireIncludes(main, 'function prisonerChoice', 'src/main.js');
 requireIncludes(main, 'function escapeOrCapture', 'src/main.js');
 
+requireIncludes(main, 'function showRuntimeError', 'src/main.js');
+requireIncludes(main, 'function escapeHtml', 'src/main.js');
+requireIncludes(main, "window.addEventListener('error'", 'src/main.js');
+requireIncludes(main, "window.addEventListener('unhandledrejection'", 'src/main.js');
+requireIncludes(main, 'Runtime Error', 'src/main.js');
+requireIncludes(main, 'function debugStatePanel', 'src/main.js');
+requireIncludes(main, 'Debug State', 'src/main.js');
+requireIncludes(main, 'debugStateText', 'src/main.js');
+requireIncludes(styles, '.debugPanel', 'src/styles.css');
+
 requireIncludes(styles, '.panel', 'src/styles.css');
 requireIncludes(styles, '.btn', 'src/styles.css');
 requireIncludes(styles, '.card', 'src/styles.css');
